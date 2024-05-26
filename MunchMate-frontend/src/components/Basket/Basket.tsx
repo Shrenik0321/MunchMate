@@ -8,6 +8,17 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const Basket = () => {
   const orderItems = [
@@ -50,9 +61,51 @@ const Basket = () => {
           ))}
         </CardContent>
         <CardFooter>
-          <Button className="w-full bg-[#f97316] hover:bg-[#f97316]">
-            Checkout
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="w-full bg-[#f97316] hover:bg-[#f97316]">
+                Checkout
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Confirm Delivery Details</DialogTitle>
+                <DialogDescription>
+                  View and change your delivery information here.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="email" className="text-right">
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    defaultValue="Shrenik Deep"
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Name
+                  </Label>
+                  <Input
+                    id="name"
+                    defaultValue="@peduarte"
+                    className="col-span-3"
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button
+                  className="bg-[#f97316] hover:bg-[#f97316]"
+                  type="submit"
+                >
+                  Continue to payment
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </CardFooter>
       </Card>
     </div>
