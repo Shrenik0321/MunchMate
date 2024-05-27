@@ -75,25 +75,37 @@ const Basket = () => {
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="email" className="text-right">
-                    Email
-                  </Label>
-                  <Input
-                    id="email"
-                    defaultValue="Shrenik Deep"
-                    className="col-span-3"
-                  />
+                <div className="grid grid-cols-1 gap-4 my-2">
+                  <div className="flex items-center gap-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      defaultValue="Shrenik Deep"
+                      className="col-span-3"
+                    />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Label htmlFor="name">Name</Label>
+                    <Input
+                      id="name"
+                      defaultValue="@peduarte"
+                      className="col-span-3"
+                    />
+                  </div>
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="name" className="text-right">
-                    Name
-                  </Label>
-                  <Input
-                    id="name"
-                    defaultValue="@peduarte"
-                    className="col-span-3"
-                  />
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 items-center gap-4">
+                    <Label htmlFor="address">Address Line</Label>
+                    <Input id="address" className="col-span-1" />
+                  </div>
+                  <div className="grid grid-cols-1 items-center gap-4">
+                    <Label htmlFor="city">City</Label>
+                    <Input id="city" className="col-span-1" />
+                  </div>
+                  <div className="grid grid-cols-1 items-center gap-4">
+                    <Label htmlFor="country">Country</Label>
+                    <Input id="country" className="col-span-1" />
+                  </div>
                 </div>
               </div>
               <DialogFooter>
