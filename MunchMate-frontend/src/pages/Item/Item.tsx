@@ -2,7 +2,6 @@ import { useLocation } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { MapPin } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Basket from "@/components/Basket/Basket";
 import MenuItem from "@/components/MenuItem/MenuItem";
 
 const Item = () => {
@@ -119,39 +118,35 @@ const Item = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-10">
-        <div className="col-span-2">
-          <Tabs defaultValue="all">
-            <TabsList className="flex w-full">
-              <TabsTrigger value="all" className="flex-grow">
-                All
-              </TabsTrigger>
-              <TabsTrigger value="breakfast" className="flex-grow">
-                Breakfast
-              </TabsTrigger>
-              <TabsTrigger value="lunch" className="flex-grow">
-                Lunch
-              </TabsTrigger>
-              <TabsTrigger value="dinner" className="flex-grow">
-                Dinner
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="all">
+      <div>
+        <Tabs defaultValue="all">
+          <TabsList className="flex w-full">
+            <TabsTrigger value="all" className="flex-grow">
+              All
+            </TabsTrigger>
+            <TabsTrigger value="breakfast" className="flex-grow">
+              Breakfast
+            </TabsTrigger>
+            <TabsTrigger value="lunch" className="flex-grow">
+              Lunch
+            </TabsTrigger>
+            <TabsTrigger value="dinner" className="flex-grow">
+              Dinner
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="all">
+            <div className="grid grid-cols-2 gap-4">
               {menuItems.map((item) => (
                 <div className="my-2">
                   <MenuItem item={item} />
                 </div>
               ))}
-            </TabsContent>
-            <TabsContent value="breakfast">Breakfast</TabsContent>
-            <TabsContent value="lunch">Lunch</TabsContent>
-            <TabsContent value="dinner">Dinner</TabsContent>
-          </Tabs>
-        </div>
-
-        <div className="col-span-1">
-          <Basket />
-        </div>
+            </div>
+          </TabsContent>
+          <TabsContent value="breakfast">Breakfast</TabsContent>
+          <TabsContent value="lunch">Lunch</TabsContent>
+          <TabsContent value="dinner">Dinner</TabsContent>
+        </Tabs>
       </div>
     </div>
   );
