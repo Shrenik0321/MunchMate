@@ -35,7 +35,7 @@ const Navbar = () => {
               <CircleUserRound />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-48">
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/manage-restaurant")}>
                 <Gauge className="mr-2 h-4 w-4" />
                 <span>Manage Restaurant</span>
               </DropdownMenuItem>
