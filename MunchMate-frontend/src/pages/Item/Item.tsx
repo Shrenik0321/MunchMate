@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MenuItem from "@/components/MenuItem/MenuItem";
+import SearchBar from "@/components/SearchBar/SearchBar";
 
 const Item = () => {
   const location = useLocation();
@@ -78,21 +79,27 @@ const Item = () => {
 
   return (
     <div className="my-6 mx-12">
-      <div className="grid grid-cols-2">
-        <div className="col-span-1 size-10/12">
+      <div className="grid grid-rows-2">
+        <div className="col-span-1 h-72">
           <img
             src={itemData.imageUrl}
             alt="Item Image"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded-xl"
           />
         </div>
 
-        <div className="col-span-1">
-          <div className="flex flex-col">
-            <div className="my-2">
-              <p className="text-3xl font-semibold cursor-pointer">
-                {itemData.name}
-              </p>
+        <div className="col-span-1 mt-8">
+          <div className="flex flex-col gap-2">
+            <div className="flex my-2 justify-between">
+              <div>
+                <p className="text-4xl font-bold cursor-pointer">
+                  {itemData.name}
+                </p>
+              </div>
+
+              <div>
+                <SearchBar />
+              </div>
             </div>
             <div className="flex gap-2 my-2">
               {itemData.tags.map((tagItem: any, index: number) => (
@@ -105,14 +112,14 @@ const Item = () => {
                 </Badge>
               ))}
             </div>
-            <div className="my-2">
-              <p className="text-[#52525b]">{itemData.description}</p>
-            </div>
             <div className="flex my-2">
               <div>
                 <MapPin />
               </div>
               <p className="text-md">{itemData.address}</p>
+            </div>
+            <div className="my-2">
+              <p className="text-[#52525b]">{itemData.description}</p>
             </div>
           </div>
         </div>
