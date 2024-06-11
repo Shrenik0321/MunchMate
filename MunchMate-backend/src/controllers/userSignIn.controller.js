@@ -1,3 +1,4 @@
+import { NODE_ENV } from "../configs/envConfig.js";
 import Users from "../models/user.model.js";
 import generateToken from "../utils/generateToken.util.js";
 import bcrypt from "bcrypt";
@@ -30,8 +31,10 @@ export const userSignInController = async (req, res) => {
     // Generate jwt access token
     const token = generateToken(user._id);
     res.cookie("accessToken", token, {
-      withCredentials: true,
-      httpOnly: false,
+      httpOnly: true, // Enhances security by preventing client-side scripts from accessing the cookie
+      secure: NODE_ENV, // Ensures the cookie is only transmitted over secure HTTPS connections
+      sameSite: "None", // Prevent CSRF attacks
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     });
 
     return res.status(200).json({

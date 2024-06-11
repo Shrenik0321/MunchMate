@@ -6,9 +6,9 @@ import { authVerifyController } from "../controllers/authVerifyController.contro
 
 const authRouter = express.Router();
 
-authRouter.post("/verify", authVerifyController);
+authRouter.get("/verify", authVerifyController);
 authRouter.post("/sign-up", userSignUpController);
 authRouter.post("/sign-in", userSignInController);
-authRouter.post("/sign-out", userSignOutController);
+authRouter.get("/sign-out", userSignOutController);
 
 export default authRouter;

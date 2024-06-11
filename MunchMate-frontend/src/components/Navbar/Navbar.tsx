@@ -9,9 +9,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
+import { userSignOut } from "@/api/userSignOut";
+import { handleToastError } from "@/utils/toast";
 
 const Navbar = () => {
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const response = await userSignOut();
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+      handleToastError("Something went wrong");
+    }
+  };
 
   return (
     <nav className="sticky bg-white opacity-[.8] top-0 z-50 shadow-md">
@@ -41,7 +53,7 @@ const Navbar = () => {
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
               </DropdownMenuItem>
