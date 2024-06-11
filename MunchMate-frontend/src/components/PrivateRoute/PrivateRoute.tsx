@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, Navigate, Outlet, useNavigate } from "react-router-dom"; // baseAxios should be imported from your utils
-import { baseAxios } from "@/utils/axios";
+import { userVerify } from "@/api/userVerify";
 
 const PrivateRoute = () => {
   const navigate = useNavigate();
@@ -11,20 +11,8 @@ const PrivateRoute = () => {
   React.useEffect(() => {
     const verifyCookie = async () => {
       try {
-        const headers = {
-          "Content-Type": "application/json",
-        };
-
-        const response = await baseAxios.get(
-          "http://localhost:5555/api/auth/verify",
-          {
-            headers: headers,
-            withCredentials: true,
-          }
-        );
-
-        const { status, user } = response.data;
-
+        const response = await userVerify();
+        const { status, user } = response;
         if (status) {
           setUsername(user);
         }

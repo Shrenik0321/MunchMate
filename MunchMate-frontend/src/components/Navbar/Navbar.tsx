@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
 import { userSignOut } from "@/api/userSignOut";
-import { handleToastError } from "@/utils/toast";
+import { handleToastError, handleToastSuccess } from "@/utils/toast";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       const response = await userSignOut();
-      console.log(response);
+      handleToastSuccess(response.message);
     } catch (err) {
       console.log(err);
       handleToastError("Something went wrong");
