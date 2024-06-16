@@ -11,9 +11,17 @@ const userSchema = mongoose.Schema(
       unique: true,
       required: [true, "Email address is required."],
     },
+    contactNo: {
+      type: String,
+      unique: true,
+      required: [true, "Contact number is required."],
+    },
     password: {
       type: String,
       required: [true, "Password is required."],
+    },
+    role: {
+      type: [String],
     },
     createdAt: {
       type: Date,

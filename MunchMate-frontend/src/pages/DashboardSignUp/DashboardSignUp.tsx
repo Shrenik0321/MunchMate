@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const SignUp = () => {
+const DashboardSignUp = () => {
   return (
     <div className="flex justify-center items-center h-screen">
       <Card className="w-[350px]">
@@ -49,7 +49,7 @@ const SignUp = () => {
           <Button className="w-full">Register</Button>
           <div className="mt-2 text-sm text-gray-600">
             Already have an account?{" "}
-            <a href="/sign-in" className="text-[#ef4444]">
+            <a href="/dashboard-sign-in" className="text-[#ef4444]">
               Sign in
             </a>
           </div>
@@ -59,4 +59,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default DashboardSignUp;

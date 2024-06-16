@@ -11,6 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { userSignOut } from "@/api/userSignOut";
 import { handleToastError, handleToastSuccess } from "@/utils/toast";
+import { Pencil } from "lucide-react";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -52,6 +53,10 @@ const Navbar = () => {
                 <span>Manage Restaurant</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate("/manage-restaurant")}>
+                <Pencil className="mr-2 h-4 w-4" />
+                <span>Edit Profile</span>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout}>
                 <LogOut className="mr-2 h-4 w-4" />

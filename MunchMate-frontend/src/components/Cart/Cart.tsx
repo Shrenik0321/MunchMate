@@ -6,8 +6,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate();
   const orderItems = [
     { itemName: "Pancakes", price: 7.99, quantity: 1 },
     { itemName: "Caesar Salad", price: 5.99, quantity: 2 },
@@ -22,9 +24,9 @@ const Cart = () => {
     <div>
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline">
+          <div className="hover:cursor-pointer">
             <ShoppingCart />
-          </Button>
+          </div>
         </SheetTrigger>
 
         <SheetContent>
@@ -57,8 +59,11 @@ const Cart = () => {
               ))}
             </div>
             <SheetFooter>
-              <Button className="w-full bg-[#f97316] hover:bg-[#f97316]">
-                Checkout
+              <Button
+                className="w-full bg-[#f97316] hover:bg-[#f97316]"
+                onClick={() => navigate("/checkout")}
+              >
+                Go to checkout
               </Button>
             </SheetFooter>
           </div>

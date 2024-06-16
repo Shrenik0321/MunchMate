@@ -14,7 +14,7 @@ import { handleToastError, handleToastSuccess } from "@/utils/toast";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-const SignIn = () => {
+const DashboardSignIn = () => {
   const navigate = useNavigate();
   const {
     register,
@@ -28,7 +28,7 @@ const SignIn = () => {
       if (response) {
         handleToastSuccess(response.message);
         setTimeout(() => {
-          navigate("/checkout");
+          navigate("/manage-restaurant");
         }, 2500);
       }
     } catch (err) {
@@ -42,7 +42,7 @@ const SignIn = () => {
       <div className="flex justify-center items-center h-screen">
         <Card className="w-[350px]">
           <CardHeader className="flex justify-center items-center">
-            <CardTitle className="font-bold">Login</CardTitle>
+            <CardTitle className="font-bold">Dashboard Login</CardTitle>
             <CardDescription className="font-semibold text-[#ef4444]">
               Login to account.
             </CardDescription>
@@ -98,4 +98,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default DashboardSignIn;

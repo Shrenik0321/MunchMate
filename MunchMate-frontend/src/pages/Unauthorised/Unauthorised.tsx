@@ -13,12 +13,12 @@ const Unauthorised = () => {
         <Button
           className="w-full bg-[#e5e7eb] text-black hover:bg-[#d1d5db]"
           onClick={() => {
-            navigate("/sign-in");
+            navigate("/dashboard-sign-in");
           }}
         >
           <div
             className="flex items-center justify-center gap-2"
-            onClick={() => navigate("/sign-up")}
+            onClick={() => navigate("/dashboard-sign-up")}
           >
             <span>Login</span>
             <span>

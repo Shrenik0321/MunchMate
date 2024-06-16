@@ -1,10 +1,32 @@
 import { useNavigate } from "react-router-dom";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import Cart from "../Cart/Cart";
 import SideBar from "../SideBar/SideBar";
+import { Pencil } from "lucide-react";
+import { LogOut } from "lucide-react";
+import { Gauge } from "lucide-react";
+import { CircleUserRound } from "lucide-react";
+import { userSignOut } from "@/api/userSignOut";
+import { handleToastError, handleToastSuccess } from "@/utils/toast";
 
 const Navbar = () => {
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const response = await userSignOut();
+      handleToastSuccess(response.message);
+    } catch (err) {
+      console.log(err);
+      handleToastError("Something went wrong");
+    }
+  };
 
   return (
     <nav className="sticky bg-white opacity-[.8] top-0 z-50 shadow-md">
@@ -25,7 +47,40 @@ const Navbar = () => {
         </div>
 
         <div className="hidden sm:flex items-center gap-4 font-semibold">
-          <Cart />
+          <div className="hidden sm:flex items-center gap-4 font-semibold">
+            <div>
+              <p>hellouser@gmail.com</p>
+            </div>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <CircleUserRound />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-48">
+                <DropdownMenuItem
+                  onClick={() => navigate("/manage-restaurant")}
+                >
+                  <Gauge className="mr-2 h-4 w-4" />
+                  <span>Manage Restaurant</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => navigate("/manage-restaurant")}
+                >
+                  <Pencil className="mr-2 h-4 w-4" />
+                  <span>Edit Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <div>
+            <Cart />
+          </div>
         </div>
       </div>
     </nav>

@@ -6,12 +6,15 @@ import Item from "./pages/Item/Item";
 import ManageRestaurant from "./pages/ManageRestaurant/ManageRestaurant";
 import OrderStatus from "./pages/OrderStatus/OrderStatus";
 import Layout2 from "./components/Layout2/Layout2";
-import SignIn from "./pages/SignIn/SignIn";
-import SignUp from "./pages/SignUp/SignUp";
+import DashboardSignIn from "./pages/DashboardSignIn/DashboardSignIn";
+import DashboardSignUp from "./pages/DashboardSignUp/DashboardSignUp";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Unauthorised from "./pages/Unauthorised/Unauthorised";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import CheckoutWrapper from "./components/CheckoutWrapper/CheckoutWrapper";
+import Checkout from "./pages/Checkout/Checkout";
+import SignIn from "./pages/SignIn/SignIn";
 
 function App() {
   return (
@@ -26,7 +29,8 @@ function App() {
         </Route>
 
         <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-out" element={<SignUp />} />
+        <Route path="/dashboard-sign-in" element={<DashboardSignIn />} />
+        <Route path="/dashboard-sign-up" element={<DashboardSignUp />} />
         <Route path="/unauthorised" element={<Unauthorised />} />
 
         <Route path="/" element={<Layout2 />}>
@@ -36,6 +40,12 @@ function App() {
 
         <Route path="/" element={<PrivateRoute />}>
           <Route path="/manage-restaurant" element={<ManageRestaurant />} />
+        </Route>
+
+        <Route path="/" element={<CheckoutWrapper />}>
+          <Route path="/" element={<Layout />}>
+            <Route path="/checkout" element={<Checkout />} />
+          </Route>
         </Route>
       </Routes>
     </div>
