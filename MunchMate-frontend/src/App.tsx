@@ -11,16 +11,23 @@ import DashboardSignUp from "./pages/DashboardSignUp/DashboardSignUp";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Unauthorised from "./pages/Unauthorised/Unauthorised";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import CheckoutWrapper from "./components/CheckoutWrapper/CheckoutWrapper";
 import Checkout from "./pages/Checkout/Checkout";
 import SignIn from "./pages/SignIn/SignIn";
+import AdminPrivateRoute from "./components/AdminPrivateRoute/AdminPrivateRoute";
+import UserPrivateRoute from "./components/UserPrivateRoute/UserPrivateRoute";
+import PersistLogin from "./components/PersistLogin/PersistLogin";
 
 function App() {
   return (
     <div>
       <ToastContainer />
       <Routes>
+        {/* Public Routes */}
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/dashboard-sign-in" element={<DashboardSignIn />} />
+        <Route path="/dashboard-sign-up" element={<DashboardSignUp />} />
+        <Route path="/unauthorised" element={<Unauthorised />} />
+
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/browse" element={<Browse />} />
@@ -28,23 +35,20 @@ function App() {
           <Route />
         </Route>
 
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/dashboard-sign-in" element={<DashboardSignIn />} />
-        <Route path="/dashboard-sign-up" element={<DashboardSignUp />} />
-        <Route path="/unauthorised" element={<Unauthorised />} />
-
         <Route path="/" element={<Layout2 />}>
           <Route path="/item/:id" element={<Item />} />
-          <Route />
         </Route>
 
-        <Route path="/" element={<PrivateRoute />}>
-          <Route path="/manage-restaurant" element={<ManageRestaurant />} />
-        </Route>
+        {/* Private Routes */}
+        <Route path="/" element={<PersistLogin />}>
+          <Route path="/" element={<AdminPrivateRoute />}>
+            <Route path="/manage-restaurant" element={<ManageRestaurant />} />
+          </Route>
 
-        <Route path="/" element={<CheckoutWrapper />}>
-          <Route path="/" element={<Layout />}>
-            <Route path="/checkout" element={<Checkout />} />
+          <Route path="/" element={<UserPrivateRoute />}>
+            <Route path="/" element={<Layout />}>
+              <Route path="/checkout" element={<Checkout />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

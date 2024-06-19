@@ -18,7 +18,7 @@ const OrderStatus = () => {
           </p>
         </div>
         <div>
-          <p className="text-3xl font-bold">Expected by : 15:12</p>
+          <p className="text-3xl font-bold">Expected by: 15:12</p>
         </div>
       </div>
 
@@ -27,8 +27,31 @@ const OrderStatus = () => {
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <div className="...">
+        <div>
           <p className="text-3xl font-bold">Delivery Details</p>
+          <div className="mt-4">
+            <p className="text-xl font-semibold">Delivering To:</p>
+            <p>John Doe</p>
+            <p>123 Main St, Apt 4B</p>
+            <p>Springfield, IL 62704</p>
+          </div>
+
+          <div className="mt-4">
+            <p className="text-xl font-semibold">Order:</p>
+            <div className="flex justify-between">
+              <p>Pizza</p>
+              <p>2</p>
+            </div>
+            <div className="flex justify-between">
+              <p>Burger</p>
+              <p>1</p>
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <p className="text-xl font-semibold">Total Cost:</p>
+            <p>$29.99</p>
+          </div>
         </div>
 
         <div>

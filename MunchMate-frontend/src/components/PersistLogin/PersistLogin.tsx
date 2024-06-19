@@ -1,12 +1,13 @@
 import React from "react";
-import { useLocation, Navigate, Outlet, useNavigate } from "react-router-dom"; // baseAxios should be imported from your utils
+import { useLocation, Outlet, useNavigate } from "react-router-dom"; // baseAxios should be imported from your utils
 import { userVerify } from "@/api/userVerify";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
-const PrivateRoute = () => {
+const PersistLogin = () => {
   const navigate = useNavigate();
   const location = useLocation(); // Ensuring location is defined
-  const [username, setUsername] = React.useState(null); // Initial state is null
   const [loading, setLoading] = React.useState(true); // Loading state
+  const { setAuth } = useAuthContext();
 
   React.useEffect(() => {
     const verifyCookie = async () => {
@@ -14,7 +15,7 @@ const PrivateRoute = () => {
         const response = await userVerify();
         const { status, user } = response;
         if (status) {
-          setUsername(user);
+          setAuth(user);
         }
       } catch (error) {
         console.log(error);
@@ -26,16 +27,7 @@ const PrivateRoute = () => {
     verifyCookie();
   }, [navigate, location]);
 
-  if (loading) {
-    // Render a loading indicator while verification is in progress
-    return <div>Loading...</div>;
-  }
-
-  return username ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/unauthorised" state={{ from: location }} replace />
-  );
+  return loading ? <div>Loading...</div> : <Outlet />;
 };
 
-export default PrivateRoute;
+export default PersistLogin;

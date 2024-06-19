@@ -5,10 +5,10 @@ const Checkout = () => {
   return (
     <div className="grid grid-cols-2 gap-8 mx-10 my-5">
       <div>
-        <Bill />
+        <OrderConfirmation />
       </div>
       <div>
-        <OrderConfirmation />
+        <Bill />
       </div>
     </div>
   );

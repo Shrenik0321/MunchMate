@@ -16,16 +16,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useNavigate } from "react-router-dom";
 
 const OrderConfirmation = () => {
+  const navigate = useNavigate();
+
   return (
     <div>
       <Card>
         <CardHeader>
+          <CardTitle>Delivery Details</CardTitle>
+          <CardDescription>Confirm details for delivery.</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-6">
+          <div className="grid gap-2">
+            <Label htmlFor="name">Name</Label>
+            <Input id="name" placeholder="Name" />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input id="email" placeholder="Email" />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="contactNo">Contact Number</Label>
+            <Input id="contactNo" placeholder="Contact Number" />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="address">Address</Label>
+            <Input id="address" placeholder="Address" />
+          </div>
+        </CardContent>
+        <CardHeader>
           <CardTitle>Payment Method</CardTitle>
-          <CardDescription>
-            Add a new payment method to your account.
-          </CardDescription>
+          <CardDescription>Add payment method to your account.</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-6">
           <div className="grid gap-2">
@@ -84,7 +107,9 @@ const OrderConfirmation = () => {
           </div>
         </CardContent>
         <CardFooter>
-          <Button className="w-full">Continue</Button>
+          <Button className="w-full" onClick={() => navigate("/order-status")}>
+            Continue
+          </Button>
         </CardFooter>
       </Card>
     </div>

@@ -10,11 +10,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuthContext } from "@/hooks/useAuthContext";
 import { handleToastError, handleToastSuccess } from "@/utils/toast";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const DashboardSignIn = () => {
+  const { setAuth } = useAuthContext();
   const navigate = useNavigate();
   const {
     register,
@@ -26,6 +28,7 @@ const DashboardSignIn = () => {
     try {
       const response = await userSignIn(data);
       if (response) {
+        setAuth(response);
         handleToastSuccess(response.message);
         setTimeout(() => {
           navigate("/manage-restaurant");

@@ -14,13 +14,16 @@ import { Gauge } from "lucide-react";
 import { CircleUserRound } from "lucide-react";
 import { userSignOut } from "@/api/userSignOut";
 import { handleToastError, handleToastSuccess } from "@/utils/toast";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { setAuth } = useAuthContext();
 
   const handleLogout = async () => {
     try {
       const response = await userSignOut();
+      setAuth(null);
       handleToastSuccess(response.message);
     } catch (err) {
       console.log(err);

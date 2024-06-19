@@ -12,19 +12,24 @@ import { useNavigate } from "react-router-dom";
 import { userSignOut } from "@/api/userSignOut";
 import { handleToastError, handleToastSuccess } from "@/utils/toast";
 import { Pencil } from "lucide-react";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 const Navbar = () => {
+  const { auth, setAuth } = useAuthContext();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       const response = await userSignOut();
+      setAuth(null);
       handleToastSuccess(response.message);
     } catch (err) {
       console.log(err);
       handleToastError("Something went wrong");
     }
   };
+
+  console.log(auth);
 
   return (
     <nav className="sticky bg-white opacity-[.8] top-0 z-50 shadow-md">
