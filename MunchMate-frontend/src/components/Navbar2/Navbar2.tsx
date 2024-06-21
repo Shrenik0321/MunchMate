@@ -6,7 +6,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Cart from "../Cart/Cart";
 import SideBar from "../SideBar/SideBar";
 import { Pencil } from "lucide-react";
 import { LogOut } from "lucide-react";
@@ -15,10 +14,11 @@ import { CircleUserRound } from "lucide-react";
 import { userSignOut } from "@/api/userSignOut";
 import { handleToastError, handleToastSuccess } from "@/utils/toast";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { Button } from "../ui/button";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { setAuth } = useAuthContext();
+  const { auth, setAuth } = useAuthContext();
 
   const handleLogout = async () => {
     try {
@@ -49,10 +49,10 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="hidden sm:flex items-center gap-4 font-semibold">
+        {auth ? (
           <div className="hidden sm:flex items-center gap-4 font-semibold">
             <div>
-              <p>hellouser@gmail.com</p>
+              <p>{auth && auth.email}</p>
             </div>
 
             <DropdownMenu>
@@ -81,10 +81,31 @@ const Navbar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div>
-            <Cart />
+        ) : (
+          <div className="flex gap-2">
+            <div>
+              <Button
+                className="bg-orange-500"
+                onClick={() => {
+                  navigate("/sign-in");
+                }}
+              >
+                Login
+              </Button>
+            </div>
+
+            <div>
+              <Button
+                className="bg-orange-500"
+                onClick={() => {
+                  navigate("/sign-up");
+                }}
+              >
+                Register
+              </Button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </nav>
   );

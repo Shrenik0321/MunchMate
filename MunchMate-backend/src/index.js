@@ -6,7 +6,6 @@ import connectDb from "./configs/dbConfig.js";
 import auth from "./routes/auth.route.js";
 import restaurant from "./routes/restaurant.route.js";
 import cookieParser from "cookie-parser";
-import { requireAuth } from "./middlewares/auth.middleware.js";
 
 const app = express();
 
