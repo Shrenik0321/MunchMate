@@ -38,7 +38,7 @@ const Home = () => {
               className:
                 "bg-[#f97316] hover:bg-[#f97316] hover:text-lg hover:p-6",
             })}
-            onClick={() => navigate("/browse")}
+            onClick={() => navigate("/restaurants")}
           >
             <div className="flex items-center justify-center gap-2">
               <span className="text-white">Order Now</span>

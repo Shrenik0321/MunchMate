@@ -26,6 +26,9 @@ const restaurantSchema = mongoose.Schema(
     description: {
       type: String,
     },
+    rating: {
+      type: Number,
+    },
     tags: {
       type: [String],
       default: [],

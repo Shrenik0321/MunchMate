@@ -3,9 +3,10 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MenuItem from "@/components/MenuItem/MenuItem";
-import SearchBar from "@/components/SearchBar/SearchBar";
+import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumbs";
+import PaginationComponent from "@/components/Pagination/Pagination";
 
-const Item = () => {
+const RestaurantItem = () => {
   const location = useLocation();
   const itemData = location.state?.data;
 
@@ -59,31 +60,19 @@ const Item = () => {
         "Juicy grilled chicken breast served on a toasted bun with lettuce, tomato, and mayonnaise.",
       imageUrl: "/src/assets/Rectangle 46 (2).png",
     },
-    {
-      itemName: "Chocolate Cake",
-      ingredients: [
-        "Flour",
-        "Cocoa Powder",
-        "Sugar",
-        "Eggs",
-        "Butter",
-        "Baking Soda",
-        "Vanilla Extract",
-      ],
-      price: 6.99,
-      description:
-        "Rich and moist chocolate cake topped with creamy chocolate frosting.",
-      imageUrl: "/src/assets/Rectangle 46 (2).png",
-    },
   ];
 
   return (
     <div className="my-6 mx-12">
+      <div className="my-5">
+        <BreadCrumbs />
+      </div>
+
       <div className="grid grid-rows-2">
         <div className="col-span-1 h-72">
           <img
             src={itemData.imageUrl}
-            alt="Item Image"
+            alt="RestaurantItem Image"
             className="w-full h-full object-cover rounded-xl"
           />
         </div>
@@ -95,10 +84,6 @@ const Item = () => {
                 <p className="text-4xl font-bold cursor-pointer">
                   {itemData.name}
                 </p>
-              </div>
-
-              <div>
-                <SearchBar />
               </div>
             </div>
             <div className="flex gap-2 my-2">
@@ -155,8 +140,12 @@ const Item = () => {
           <TabsContent value="dinner">Dinner</TabsContent>
         </Tabs>
       </div>
+
+      <div className="my-5">
+        <PaginationComponent />
+      </div>
     </div>
   );
 };
 
-export default Item;
+export default RestaurantItem;
