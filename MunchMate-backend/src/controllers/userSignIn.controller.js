@@ -1,5 +1,5 @@
 import { NODE_ENV } from "../configs/envConfig.js";
-import Users from "../models/user.model.js";
+import User from "../models/user.model.js";
 import generateToken from "../utils/generateToken.util.js";
 import bcrypt from "bcrypt";
 
@@ -8,7 +8,7 @@ export const userSignInController = async (req, res) => {
     const userToSignIn = { ...req.body };
 
     // Check if user already exists.
-    const user = await Users.findOne({ email: userToSignIn.email });
+    const user = await User.findOne({ email: userToSignIn.email });
 
     if (!user) {
       return res.status(401).json({

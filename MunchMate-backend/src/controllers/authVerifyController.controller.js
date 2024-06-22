@@ -1,4 +1,4 @@
-import Users from "../models/user.model.js";
+import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { ACCESS_TOKEN } from "../configs/envConfig.js";
 
@@ -19,7 +19,7 @@ export const authVerifyController = async (req, res) => {
       .json({ error: "Token expired, please log in again." });
   }
 
-  const user = await Users.findById(decoded.userId);
+  const user = await User.findById(decoded.userId);
 
   if (user) return res.status(200).json({ status: true, user });
   else

@@ -1,4 +1,4 @@
-import Users from "../models/user.model.js";
+import User from "../models/user.model.js";
 import generateToken from "../utils/generateToken.util.js";
 import bcrypt from "bcrypt";
 
@@ -7,7 +7,7 @@ export const userSignUpController = async (req, res) => {
     const userToSignUp = { ...req.body };
 
     // Check if user already exists.
-    const existingUser = await Users.findOne({ email: userToSignUp.email });
+    const existingUser = await User.findOne({ email: userToSignUp.email });
     if (existingUser) {
       return res.status(401).json({ message: "User already exists." });
     }
@@ -21,7 +21,7 @@ export const userSignUpController = async (req, res) => {
     };
 
     // Create new user in db.
-    const user = await Users.create(newUserToSignUp);
+    const user = await User.create(newUserToSignUp);
 
     // Generate jwt access token
     const token = generateToken(user._id);

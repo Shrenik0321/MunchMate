@@ -1,4 +1,4 @@
-import Users from "../models/user.model.js";
+import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { ACCESS_TOKEN } from "../configs/envConfig.js";
 
@@ -20,7 +20,7 @@ export const requireAuth = async (req, res, next) => {
         .json({ error: "Token expired, please log in again" });
     }
 
-    const user = await Users.findById(decoded.userId).select("-password");
+    const user = await User.findById(decoded.userId).select("-password");
 
     req.user = user;
     next();

@@ -22,7 +22,6 @@ const restaurantSchema = mongoose.Schema(
     },
     imageUrl: {
       type: String,
-      // required: [true, "Image URL is required."],
     },
     description: {
       type: String,
@@ -41,6 +40,6 @@ const restaurantSchema = mongoose.Schema(
   }
 );
 
-const Restaurants = mongoose.model("Restaurants", restaurantSchema);
+const Restaurant = mongoose.model("Restaurants", restaurantSchema);
 
-export default Restaurants;
+export default Restaurant;

@@ -1,6 +1,6 @@
 import Restaurants from "../models/restaurant.model.js";
 
-export const getRestaurantsController = async (req, res) => {
+const getRestaurantsController = async (req, res) => {
   try {
     const { id, name } = req.body;
 
@@ -32,3 +32,5 @@ export const getRestaurantsController = async (req, res) => {
       .json({ message: "Internal server error.", error: err });
   }
 };
+
+export default getRestaurantsController;
