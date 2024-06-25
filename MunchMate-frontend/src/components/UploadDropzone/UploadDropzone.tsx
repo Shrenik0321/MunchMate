@@ -1,10 +1,13 @@
 import { Cloud, File } from "lucide-react";
 import Dropzone from "react-dropzone";
 
-const UploadDropzone = () => {
-  const handleFileUpload = () => {
-    console.log("Here");
+const UploadDropzone = ({ setImageUploadFormData }: any) => {
+  const handleFileUpload = async (acceptedFiles: any) => {
+    // const formData = new FormData();
+    // formData.append("imageFileData", acceptedFiles[0]);
+    setImageUploadFormData(acceptedFiles[0]);
   };
+
   return (
     <Dropzone multiple={false} onDrop={handleFileUpload}>
       {({ getRootProps, acceptedFiles }) => (

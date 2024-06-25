@@ -1,29 +1,33 @@
-import { firebaseStorage } from "../configs/firebaseConfig";
+import { firebaseStorage } from "../configs/firebaseConfig.js";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-const ImageUploadFunc = async (imageFileObjArr, folderName) => {
-  const uploadTasks = imageFileObjArr.map(async (imageFileObj) => {
-    const metaData = {
-      contentType: imageFileObj?.mimetype,
-    };
+const ImageUploadFunc = async (imageFileData, folderName) => {
+  try {
+    const uploadTasks = imageFileData.map(async (imageFileObj) => {
+      const metaData = {
+        contentType: imageFileObj?.mimetype,
+      };
 
-    const imageRef = ref(
-      firebaseStorage,
-      `munch-mate/${folderName}/` + imageFileObj?.originalname
-    );
+      const imageRef = ref(
+        firebaseStorage,
+        `munch-mate/${folderName}/` + imageFileObj?.originalname
+      );
 
-    const snapShot = await uploadBytesResumable(
-      imageRef,
-      imageFileObj.buffer,
-      metaData
-    );
+      const snapShot = await uploadBytesResumable(
+        imageRef,
+        imageFileObj.buffer,
+        metaData
+      );
 
-    return getDownloadURL(snapShot.ref);
-  });
+      return getDownloadURL(snapShot.ref);
+    });
 
-  const imagePathList = await Promise.all(uploadTasks);
+    const imagePathList = await Promise.all(uploadTasks);
 
-  return imagePathList;
+    return imagePathList[0];
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export { ImageUploadFunc };

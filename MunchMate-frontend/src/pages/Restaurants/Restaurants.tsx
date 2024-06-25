@@ -1,5 +1,4 @@
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumbs";
-import PaginationComponent from "@/components/Pagination/Pagination";
 import RestaurantFilters from "@/components/RestaurantFilters/RestaurantFilters";
 import RestaurantStores from "@/components/RestaurantStores/RestaurantStores";
 
@@ -15,9 +14,6 @@ const Restaurants = () => {
         </div>
         <div className="col-span-4 overflow-y-auto">
           <RestaurantStores />
-          <div>
-            <PaginationComponent />
-          </div>
         </div>
       </div>
     </div>

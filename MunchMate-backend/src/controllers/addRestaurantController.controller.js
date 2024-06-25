@@ -1,11 +1,17 @@
 import Restaurant from "../models/restaurant.model.js";
+import { ImageUploadFunc } from "../utils/imageUploadFunc.js";
 
 const addRestaurantController = async (req, res) => {
   try {
-    const { name, address, contactNumber, email, imageUrl, description, tags } =
-      req.body;
+    let imageUrl;
+    if (req.files && req.files["imageFileData"]) {
+      const imageFileData = req.files["imageFileData"];
+      imageUrl = await ImageUploadFunc(imageFileData, "restaurants");
+    }
 
-    // Check if name, email, or contactNumber already exists
+    const { name, address, contactNumber, email, description, tags } = req.body;
+
+    // Check if name, email, or contact number already exists
     const existingRestaurant = await Restaurant.findOne({
       $or: [{ name }, { email }, { contactNumber }],
     });
@@ -17,7 +23,7 @@ const addRestaurantController = async (req, res) => {
       });
     }
 
-    const restaurant = new Restaurant({
+    const restaurantToBeAdded = {
       name,
       address,
       contactNumber,
@@ -25,13 +31,16 @@ const addRestaurantController = async (req, res) => {
       imageUrl,
       description,
       tags,
-    });
+    };
+
+    const restaurant = new Restaurant(restaurantToBeAdded);
 
     const newRestaurant = await restaurant.save();
     res
       .status(201)
       .json({ message: "Restaurant added successfully.", data: newRestaurant });
   } catch (err) {
+    console.log(err);
     return res
       .status(500)
       .json({ message: "Internal server error.", error: err });
