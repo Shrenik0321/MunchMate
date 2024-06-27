@@ -7,11 +7,7 @@ import fileUploadMiddleware from "../middlewares/fileUpload.middleware.js";
 
 const restaurantRouter = express.Router();
 
-restaurantRouter.post(
-  "/get-restaurants",
-  requireAuth,
-  getRestaurantsController
-);
+restaurantRouter.post("/get-restaurants", getRestaurantsController);
 
 restaurantRouter.post(
   "/add-restaurant",

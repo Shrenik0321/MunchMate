@@ -3,7 +3,7 @@ import Layout from "./components/Layout/Layout";
 import Home from "./pages/Home/Home";
 import Restaurants from "./pages/Restaurants/Restaurants";
 import RestaurantItem from "./pages/Item/RestaurantItem";
-import ManageRestaurant from "./pages/ManageRestaurant/ManageRestaurant";
+import ManageRestaurant from "./components/ManageRestaurant/ManageRestaurant";
 import OrderStatus from "./pages/OrderStatus/OrderStatus";
 import Layout2 from "./components/Layout2/Layout2";
 import DashboardSignIn from "./pages/DashboardSignIn/DashboardSignIn";
@@ -16,6 +16,8 @@ import SignIn from "./pages/SignIn/SignIn";
 import AdminPrivateRoute from "./components/AdminPrivateRoute/AdminPrivateRoute";
 import UserPrivateRoute from "./components/UserPrivateRoute/UserPrivateRoute";
 import PersistLogin from "./components/PersistLogin/PersistLogin";
+import AddRestaurant from "./pages/AddRestaurant/AddRestaurant";
+import AdminHome from "./pages/AdminHome/AdminHome";
 
 function App() {
   return (
@@ -42,7 +44,10 @@ function App() {
         {/* Private Routes */}
         <Route path="/" element={<PersistLogin />}>
           <Route path="/" element={<AdminPrivateRoute />}>
-            <Route path="/manage-restaurant" element={<ManageRestaurant />} />
+            <Route path="/" element={<ManageRestaurant />}>
+              <Route path="/manage-restaurant" element={<AdminHome />} />
+              <Route path="/add-restaurant" element={<AddRestaurant />} />
+            </Route>
           </Route>
 
           <Route path="/" element={<UserPrivateRoute />}>
