@@ -36,11 +36,6 @@ function App() {
           <Route />
         </Route>
 
-        <Route path="/" element={<Layout2 />}>
-          <Route path="/restaurants" element={<Restaurants />} />
-          <Route path="/restaurant/:id" element={<RestaurantItem />} />
-        </Route>
-
         {/* Private Routes */}
         <Route path="/" element={<PersistLogin />}>
           <Route path="/" element={<AdminPrivateRoute />}>
@@ -54,6 +49,11 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route path="/checkout" element={<Checkout />} />
             </Route>
+          </Route>
+
+          <Route path="/" element={<Layout2 />}>
+            <Route path="/restaurants" element={<Restaurants />} />
+            <Route path="/restaurant/:id" element={<RestaurantItem />} />
           </Route>
         </Route>
       </Routes>
