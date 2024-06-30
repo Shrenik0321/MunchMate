@@ -5,14 +5,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useCartContext } from "@/hooks/useCartContext";
 
 const Bill = () => {
+  const { cart } = useCartContext();
   const deliveryCost = 3.0;
-  const foodItems = [
-    { name: "Pancakes", price: 7.99 },
-    { name: "Caesar Salad", price: 9.99 },
-    { name: "Spaghetti Carbonara", price: 12.99 },
-  ];
+  const foodItems = [...cart];
   const totalCost =
     foodItems.reduce((total, item) => total + item.price, 0) + deliveryCost;
 

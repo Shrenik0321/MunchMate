@@ -9,20 +9,27 @@ import {
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { useCartContext } from "@/hooks/useCartContext";
 
 const Cart = () => {
-  const [cartCount, setCartCount] = React.useState(3);
+  const { cart, setCart } = useCartContext();
+  const [cartItems, setCartItems] = React.useState([]);
   const navigate = useNavigate();
   const { auth } = useAuthContext();
-  const orderItems = [
-    { itemName: "Pancakes", price: 7.99, quantity: 1 },
-    { itemName: "Caesar Salad", price: 5.99, quantity: 2 },
-    { itemName: "Spaghetti Carbonara", price: 7.99, quantity: 1 },
-  ];
 
-  const total = orderItems
-    .reduce((sum: number, item: any) => sum + item.price * item.quantity, 0)
+  const total = cartItems
+    .reduce((sum: number, item: any) => sum + item.price * 1, 0)
     .toFixed(2);
+
+  React.useEffect(() => {
+    setCartItems(cart);
+  }, [cart]);
+
+  const handleRemoveItem = (index: number) => {
+    const newCartItems = cartItems.filter((_, i) => i !== index);
+    setCartItems(newCartItems);
+    setCart(newCartItems);
+  };
 
   return (
     <div>
@@ -30,9 +37,9 @@ const Cart = () => {
         <SheetTrigger asChild>
           <div className="relative hover:cursor-pointer">
             <ShoppingCart />
-            {cartCount > 0 && (
+            {cartItems.length > 0 && (
               <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-orange-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
-                {cartCount}
+                {cartItems.length}
               </span>
             )}
           </div>
@@ -48,21 +55,22 @@ const Cart = () => {
                 </div>
               </div>
               <div className="mb-4">
-                {orderItems.map((item: any, index: number) => (
+                {cartItems.map((item: any, index: number) => (
                   <div
                     key={index}
                     className="flex justify-between items-center mb-2"
                   >
                     <div>
-                      <p>{item.itemName}</p>
-                      <p className="text-sm text-gray-500">x{item.quantity}</p>
+                      <p>{item.name}</p>
+                      <p className="text-sm text-gray-500">x{1}</p>
                     </div>
                     <div className="flex gap-2 items-center">
-                      <p>${(item.price * item.quantity).toFixed(2)}</p>
+                      <p>${(item.price * 1).toFixed(2)}</p>
                       <Trash2
                         size={18}
                         color={"#dc2626"}
                         className="cursor-pointer"
+                        onClick={() => handleRemoveItem(index)}
                       />
                     </div>
                   </div>

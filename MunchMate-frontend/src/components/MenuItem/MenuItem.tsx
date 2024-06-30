@@ -5,51 +5,63 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Dot } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Plus } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useCartContext } from "@/hooks/useCartContext";
+import { handleToastSuccess } from "@/utils/toast";
 
 const MenuItem = ({ item }: any) => {
+  const { cart, setCart } = useCartContext();
+
+  const handleAddItemToCart = () => {
+    let tempCart = [...cart, item];
+    setCart(tempCart);
+    handleToastSuccess("Successfully added to cart!");
+  };
+
   return (
     <div>
-      <Card className="w-full max-h-48 relative overflow-hidden">
-        <div className="flex h-full">
-          <div className="w-1/3 h-full">
-            <img
-              src={item.imageUrl}
-              alt="Food Image"
-              className="w-full h-full object-cover"
-            />
+      <Card className="w-full max-h-80 relative overflow-hidden">
+        <img
+          src={item.imageUrl}
+          alt="Food Image"
+          className="w-full h-32 object-cover"
+        />
+        <div className="p-4 flex flex-col justify-between">
+          <div className="flex justify-between items-start">
+            <CardHeader className="w-full p-0">
+              <CardTitle>
+                <div className="flex justify-between my-2">
+                  <div className="text-xl">{item.name}</div>
+                  <div className="text-lg">{`$ ${item.price}`}</div>
+                </div>
+              </CardTitle>
+            </CardHeader>
           </div>
-          <div className="w-2/3 p-4 flex flex-col justify-between">
-            <div className="flex justify-between items-start">
-              <CardHeader className="w-full p-0">
-                <CardTitle>
-                  <div className="flex justify-between my-2">
-                    <div className="text-xl">{item.itemName}</div>
-                    <div className="text-lg">{`$ ${item.price}`}</div>
-                  </div>
-                </CardTitle>
-              </CardHeader>
-            </div>
-            <CardContent className="p-0 mt-2 flex-grow">
-              <CardDescription>{item.description}</CardDescription>
-              <div className="flex flex-wrap items-center gap-2 mt-2">
-                {item.ingredients.map((ingredient: any, index: number) => (
-                  <div key={index} className="flex items-center">
-                    <CardDescription>{ingredient}</CardDescription>
-                    {index < item.ingredients.length - 1 && (
-                      <Dot className="mx-1" />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </div>
+          <CardContent className="p-0 mt-2 flex-grow">
+            <TooltipProvider>
+              <Tooltip>
+                <CardDescription className="truncate">
+                  <TooltipTrigger>{item.description}</TooltipTrigger>
+                </CardDescription>
+
+                <TooltipContent>{item.description}</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </CardContent>
         </div>
-        <div className="absolute bottom-4 right-4">
-          <Avatar>
-            <AvatarFallback>
+        <div className="absolute top-2 right-2">
+          <Avatar
+            className="bg-gray-100 hover:bg-gray-400 transform transition-transform duration-300 hover:scale-110 cursor-pointer"
+            onClick={handleAddItemToCart}
+          >
+            <AvatarFallback className="flex items-center justify-center w-full h-full">
               <Plus />
             </AvatarFallback>
           </Avatar>

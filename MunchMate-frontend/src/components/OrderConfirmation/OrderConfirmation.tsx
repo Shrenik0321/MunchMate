@@ -108,7 +108,7 @@ const OrderConfirmation = () => {
         </CardContent>
         <CardFooter>
           <Button className="w-full" onClick={() => navigate("/order-status")}>
-            Continue
+            Confirm Order
           </Button>
         </CardFooter>
       </Card>
