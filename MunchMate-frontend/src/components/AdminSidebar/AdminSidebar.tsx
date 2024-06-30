@@ -9,7 +9,7 @@ const AdminSidebar = () => {
       <h2 className="text-2xl font-bold pb-6">Manage Restaurant</h2>
       <div className="space-y-6">
         <div
-          className="flex items-center space-x-2 cursor-pointer rounded-md py-1"
+          className="flex items-center space-x-2 cursor-pointer rounded-md p-3 hover:bg-gray-200 transition-colors duration-200"
           onClick={() => {
             navigate("/manage-restaurant");
           }}
@@ -18,7 +18,7 @@ const AdminSidebar = () => {
           <span>Overview</span>
         </div>
         <div
-          className="flex items-center space-x-2 cursor-pointer rounded-md py-1"
+          className="flex items-center space-x-2 cursor-pointer rounded-md p-3 hover:bg-gray-200 transition-colors duration-200"
           onClick={() => {
             navigate("/add-restaurant");
           }}

@@ -20,7 +20,7 @@ const ManageRestaurant = () => {
         <ResizablePanel defaultSize={80}>
           <ResizablePanelGroup direction="vertical" className="h-full w-full">
             <ResizablePanel defaultSize={10} minSize={10} maxSize={15}>
-              <div className="flex items-center justify-center h-full w-full p-2 bg-gray-100 shadow">
+              <div>
                 <AdminTopBar />
               </div>
             </ResizablePanel>
