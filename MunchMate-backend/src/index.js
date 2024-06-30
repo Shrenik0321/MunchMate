@@ -3,9 +3,10 @@ import express from "express";
 import cors from "cors";
 import { LOCALHOST_SERVER_PORT } from "./configs/envConfig.js";
 import connectDb from "./configs/dbConfig.js";
+import cookieParser from "cookie-parser";
 import auth from "./routes/auth.route.js";
 import restaurant from "./routes/restaurant.route.js";
-import cookieParser from "cookie-parser";
+import restaurantItem from "./routes/restaurantItem.route.js";
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(cors(corsOptions));
 // Defining Routes
 app.use("/api/auth", auth);
 app.use("/api/restaurants", restaurant);
+app.use("/api/restaurant-items", restaurantItem);
 
 app.listen(LOCALHOST_SERVER_PORT, (req, res) => {
   connectDb();

@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 const RestaurantItemCard = ({ item }: any) => {
   const navigate = useNavigate();
   return (
-    <Card key={item.id} className="w-full my-4">
+    <Card key={item._id} className="w-full my-4">
       <img
         src={item.imageUrl}
         alt={item.name}
@@ -22,7 +22,7 @@ const RestaurantItemCard = ({ item }: any) => {
           <CardTitle
             className="text-xl cursor-pointer hover:text-[#f97316]"
             onClick={() =>
-              navigate(`/restaurant/${item.id}`, { state: { data: item } })
+              navigate(`/restaurant/${item._id}`, { state: { data: item } })
             }
           >
             {item.name}

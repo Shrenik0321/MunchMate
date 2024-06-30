@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Home from "./pages/Home/Home";
 import Restaurants from "./pages/Restaurants/Restaurants";
-import RestaurantItem from "./pages/Item/RestaurantItem";
+import RestaurantItem from "./pages/RestaurantItem/RestaurantItem";
 import ManageRestaurant from "./components/ManageRestaurant/ManageRestaurant";
 import OrderStatus from "./pages/OrderStatus/OrderStatus";
 import Layout2 from "./components/Layout2/Layout2";
