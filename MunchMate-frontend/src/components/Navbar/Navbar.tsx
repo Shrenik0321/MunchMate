@@ -53,16 +53,12 @@ const Navbar = () => {
                 <CircleUserRound />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-48">
-                <DropdownMenuItem
-                  onClick={() => navigate("/manage-restaurant")}
-                >
+                <DropdownMenuItem onClick={() => navigate("/admin/overview")}>
                   <Gauge className="mr-2 h-4 w-4" />
                   <span>Manage Restaurant</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={() => navigate("/manage-restaurant")}
-                >
+                <DropdownMenuItem onClick={() => navigate("/admin/overview")}>
                   <Pencil className="mr-2 h-4 w-4" />
                   <span>Edit Profile</span>
                 </DropdownMenuItem>

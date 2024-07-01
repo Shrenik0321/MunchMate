@@ -16,8 +16,10 @@ import SignIn from "./pages/SignIn/SignIn";
 import AdminPrivateRoute from "./components/AdminPrivateRoute/AdminPrivateRoute";
 import UserPrivateRoute from "./components/UserPrivateRoute/UserPrivateRoute";
 import PersistLogin from "./components/PersistLogin/PersistLogin";
+import AdminOverview from "./pages/AdminOverview/AdminOverview";
+import AdminOrders from "./pages/AdminOrders/AdminOrders";
 import AddRestaurant from "./pages/AddRestaurant/AddRestaurant";
-import AdminHome from "./pages/AdminHome/AdminHome";
+import AllRestaurants from "./pages/AllRestaurants/AllRestaurants";
 
 function App() {
   return (
@@ -40,8 +42,10 @@ function App() {
         <Route path="/" element={<PersistLogin />}>
           <Route path="/" element={<AdminPrivateRoute />}>
             <Route path="/" element={<ManageRestaurant />}>
-              <Route path="/manage-restaurant" element={<AdminHome />} />
-              <Route path="/add-restaurant" element={<AddRestaurant />} />
+              <Route path="/admin/overview" element={<AdminOverview />} />
+              <Route path="/admin/orders" element={<AdminOrders />} />
+              <Route path="/admin/restaurants" element={<AllRestaurants />} />
+              <Route path="/admin/add-restaurant" element={<AddRestaurant />} />
             </Route>
           </Route>
 

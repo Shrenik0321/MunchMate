@@ -56,7 +56,7 @@ const SideBar = () => {
                     <SheetTitle>{auth.name}</SheetTitle>
                     <p
                       className="text-sm text-orange-500 cursor-pointer"
-                      onClick={() => navigate("/manage-restaurant")}
+                      onClick={() => navigate("/admin/overview")}
                     >
                       Manage your account.
                     </p>
@@ -130,7 +130,7 @@ const SideBar = () => {
           <div>
             <p
               className="text-sm text-gray-500 cursor-pointer"
-              onClick={() => navigate("/manage-restaurant")}
+              onClick={() => navigate("/admin/overview")}
             >
               Add and manage your restaurant.
             </p>

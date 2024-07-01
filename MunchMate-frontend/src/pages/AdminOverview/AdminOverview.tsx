@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const AdminHome = () => {
+const AdminOverview = () => {
   return (
     <div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-5">
@@ -132,4 +132,4 @@ const AdminHome = () => {
   );
 };
 
-export default AdminHome;
+export default AdminOverview;

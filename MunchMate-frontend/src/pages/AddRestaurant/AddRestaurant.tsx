@@ -181,6 +181,23 @@ const AddRestaurant = () => {
 
           <FormField
             control={form.control}
+            name="rating"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Rating</FormLabel>
+                <FormControl>
+                  <Input type="number" placeholder="Rating" {...field} />
+                </FormControl>
+                <FormDescription>
+                  Provide a rating for your restaurant (0-5).
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
             name="description"
             render={({ field }) => (
               <FormItem>
@@ -195,23 +212,6 @@ const AddRestaurant = () => {
                 <FormDescription>
                   A brief description of your restaurant. This will help
                   customers know more about you.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="rating"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Rating</FormLabel>
-                <FormControl>
-                  <Input type="number" placeholder="Rating" {...field} />
-                </FormControl>
-                <FormDescription>
-                  Provide a rating for your restaurant (0-5).
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -248,7 +248,6 @@ const AddRestaurant = () => {
           />
 
           <UploadDropzone setImageUploadFormData={setImageUploadFormData} />
-
           <Button type="submit">Add Restaurant</Button>
         </form>
       </Form>

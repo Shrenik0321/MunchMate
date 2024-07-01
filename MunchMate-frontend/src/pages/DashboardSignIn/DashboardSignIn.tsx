@@ -31,7 +31,7 @@ const DashboardSignIn = () => {
         setAuth(response);
         handleToastSuccess(response.message);
         setTimeout(() => {
-          navigate("/manage-restaurant");
+          navigate("/admin/overview");
         }, 2500);
       }
     } catch (err) {
