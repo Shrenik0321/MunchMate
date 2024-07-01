@@ -2,7 +2,7 @@ import AdminSidebar from "@/components/AdminSidebar/AdminSidebar";
 import { Outlet } from "react-router-dom";
 import AdminTopBar from "../AdminTopBar/AdminTopBar";
 
-const ManageRestaurant = () => {
+const AdminLayout = () => {
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       <div className="flex h-screen overflow-hidden">
@@ -22,4 +22,4 @@ const ManageRestaurant = () => {
   );
 };
 
-export default ManageRestaurant;
+export default AdminLayout;
