@@ -87,7 +87,6 @@ const UpdateRestaurant = () => {
     resolver: zodResolver(restaurantFormSchema),
     mode: "onChange",
   });
-  const [restaurants, setRestaurants] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [imageUrl, setImageUrl] = React.useState<string | null>(null); // State for image URL
 
@@ -97,9 +96,8 @@ const UpdateRestaurant = () => {
         const response = await getAllRestaurants({});
         const { data } = response;
         if (data && data.length > 0) {
-          setRestaurants(data);
-          setImageUrl(data[0].imageUrl); // Set the imageUrl from the first restaurant
-          form.reset(data[0]); // Assuming you want to edit the first restaurant in the array
+          setImageUrl(data[0].imageUrl);
+          form.reset(data[0]);
         }
       } catch (error) {
         console.log(error);
