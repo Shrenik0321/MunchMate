@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getAllRestaurantItems } from "@/api/getAllRestaurantItems";
 import Loader from "@/components/Loader/Loader";
-import { Plus, Edit, Trash, Save, X } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -24,6 +24,15 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm }: any) => {
   return (
@@ -94,8 +103,6 @@ const AddNewItemModal = ({
 const AllRestaurantItems = () => {
   const [restaurantItems, setRestaurantItems] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState(false);
-  const [editingRowId, setEditingRowId] = React.useState<string | null>(null);
-  const [editedItem, setEditedItem] = React.useState<any>({});
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isModalAddItemOpen, setIsModalAddItemOpen] = React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState(null);
@@ -104,7 +111,13 @@ const AllRestaurantItems = () => {
   const location = useLocation();
   const { restaurant } = location.state || {};
 
-  const tableHeaders = ["Name", "Price", "Description", "Actions"];
+  const tableHeaders = [
+    "Name",
+    "Price",
+    "Description",
+    "Ingredients",
+    "Actions",
+  ];
 
   React.useEffect(() => {
     const getRestaurantItems = async () => {
@@ -126,28 +139,6 @@ const AllRestaurantItems = () => {
 
     getRestaurantItems();
   }, [restaurant._id]);
-
-  const handleEditClick = (item: any) => {
-    setEditingRowId(item._id);
-    setEditedItem(item);
-  };
-
-  const handleSaveClick = () => {
-    // Handle save logic here
-    setEditingRowId(null);
-  };
-
-  const handleCancelClick = () => {
-    setEditingRowId(null);
-    setEditedItem({});
-  };
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: string
-  ) => {
-    setEditedItem({ ...editedItem, [field]: e.target.value });
-  };
 
   const handleDeleteClick = (item: any) => {
     setItemToDelete(item);
@@ -175,9 +166,9 @@ const AllRestaurantItems = () => {
   };
 
   const handleConfirmAddItem = () => {
-    // Handle the delete action here
+    // Handle the add action here
     console.log("Adding item:");
-    // Close the modal after deletion
+    // Close the modal after addition
     setIsModalAddItemOpen(false);
   };
 
@@ -202,11 +193,19 @@ const AllRestaurantItems = () => {
               <span>Add Item</span>
             </Button>
           </div>
-          <div className="grid grid-cols-10 border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5">
+          <div className="grid grid-cols-12 border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5">
             {tableHeaders.map((header, index) => (
               <div
                 className={`col-span-${
-                  index === 1 ? 2 : index === 2 ? 4 : index === 3 ? 1 : 3
+                  index === 1
+                    ? 1
+                    : index === 2
+                    ? 3
+                    : index === 3
+                    ? 4
+                    : index === 4
+                    ? 1
+                    : 3
                 } flex items-center`}
                 key={header}
               >
@@ -216,97 +215,73 @@ const AllRestaurantItems = () => {
           </div>
           {restaurantItems.map((item: any, key: number) => (
             <div
-              className="grid grid-cols-10 border-t border-stroke py-3 dark:border-strokedark md:px-6 2xl:px-7.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors duration-200"
+              className="grid grid-cols-12 border-t border-stroke py-3 dark:border-strokedark md:px-6 2xl:px-7.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors duration-200"
               key={key}
             >
-              {editingRowId === item._id ? (
-                <>
-                  <div className="col-span-3 flex items-center">
-                    <input
-                      type="text"
-                      value={editedItem.name}
-                      onChange={(e) => handleInputChange(e, "name")}
-                      className="input input-bordered w-full"
+              <div
+                className="col-span-3 flex items-center"
+                onClick={() =>
+                  navigate(`/admin/restaurant/item/${item._id}`, {
+                    state: { restaurant: item },
+                  })
+                }
+              >
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                  <div className="rounded-md w-24 h-24 overflow-hidden">
+                    <img
+                      src={item.imageUrl}
+                      alt="Product"
+                      className="object-cover w-full h-full"
                     />
                   </div>
-                  <div className="col-span-2 flex items-center">
-                    <input
-                      type="text"
-                      value={editedItem.price}
-                      onChange={(e) => handleInputChange(e, "price")}
-                      className="input input-bordered w-full"
-                    />
-                  </div>
-                  <div className="col-span-4 flex items-center">
-                    <input
-                      type="text"
-                      value={editedItem.description}
-                      onChange={(e) => handleInputChange(e, "description")}
-                      className="input input-bordered w-full"
-                    />
-                  </div>
-                  <div className="col-span-1 flex items-center space-x-2">
-                    <Save
-                      className="w-5 h-5 text-green-500 cursor-pointer"
-                      onClick={handleSaveClick}
-                    />
-                    <X
-                      className="w-5 h-5 text-red-500 cursor-pointer"
-                      onClick={handleCancelClick}
-                    />
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div
-                    className="col-span-3 flex items-center"
-                    onClick={() =>
-                      navigate(`/admin/restaurant/item/${item._id}`, {
-                        state: { restaurant: item },
-                      })
-                    }
-                  >
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                      <div className="rounded-md w-24 h-24 overflow-hidden">
-                        <img
-                          src={item.imageUrl}
-                          alt="Product"
-                          className="object-cover w-full h-full"
-                        />
-                      </div>
-                      <p className="text-sm text-black dark:text-white">
-                        {item.name}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="col-span-2 flex items-center">
-                    <p className="text-sm text-black dark:text-white">
-                      {item.price}
-                    </p>
-                  </div>
-                  <div className="col-span-4 flex items-center">
-                    <p className="text-sm text-black dark:text-white">
-                      {item.description}
-                    </p>
-                  </div>
-                  <div className="col-span-1 flex items-center space-x-2">
-                    <Edit
-                      className="w-5 h-5 text-blue-500 cursor-pointer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleEditClick(item);
-                      }}
-                    />
-                    <Trash
-                      className="w-5 h-5 text-red-500 cursor-pointer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteClick(item);
-                      }}
-                    />
-                  </div>
-                </>
-              )}
+                  <p className="text-sm text-black dark:text-white">
+                    {item.name}
+                  </p>
+                </div>
+              </div>
+
+              <div className="col-span-1 flex items-center">
+                <p className="text-sm text-black dark:text-white">
+                  {item.price}
+                </p>
+              </div>
+
+              <div className="col-span-3 flex items-center">
+                <p className="text-sm text-black dark:text-white">
+                  {item.description}
+                </p>
+              </div>
+
+              <div className="col-span-4 flex items-center">
+                <Select>
+                  <SelectTrigger className="w-[75%] mx-2">
+                    <SelectValue placeholder="Ingredients" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Ingredients</SelectLabel>
+                      {item.ingredients &&
+                        item.ingredients.map(
+                          (ingredient: string, index: number) => (
+                            <SelectItem key={index} value={ingredient}>
+                              <span>{ingredient}</span>
+                            </SelectItem>
+                          )
+                        )}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="col-span-1 flex items-center space-x-2">
+                <Trash
+                  className="w-5 h-5 text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteClick(item);
+                  }}
+                />
+              </div>
             </div>
           ))}
         </div>
