@@ -21,7 +21,7 @@ const AllRestaurants = () => {
     const getRestaurants = async () => {
       setLoading(true);
       try {
-        const response = await getAllRestaurants();
+        const response = await getAllRestaurants({});
         const { data } = response;
         if (data) {
           setRestaurants(data);

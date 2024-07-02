@@ -109,6 +109,10 @@ const AddRestaurant = () => {
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <div>
+            <p className="text-3xl font-bold">Details</p>
+            <p className="text-xs">Enter the details about your restaurant.</p>
+          </div>
           <FormField
             control={form.control}
             name="name"
@@ -116,7 +120,11 @@ const AddRestaurant = () => {
               <FormItem>
                 <FormLabel>Restaurant Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Restaurant Name" {...field} />
+                  <Input
+                    className="bg-white"
+                    placeholder="Restaurant Name"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>
                   The name of your restaurant. This will be displayed to
@@ -134,7 +142,11 @@ const AddRestaurant = () => {
               <FormItem>
                 <FormLabel>Restaurant Address</FormLabel>
                 <FormControl>
-                  <Input placeholder="Restaurant Address" {...field} />
+                  <Input
+                    className="bg-white"
+                    placeholder="Restaurant Address"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>
                   The address of your restaurant. This will be displayed to
@@ -152,7 +164,11 @@ const AddRestaurant = () => {
               <FormItem>
                 <FormLabel>Contact Number</FormLabel>
                 <FormControl>
-                  <Input placeholder="Contact Number" {...field} />
+                  <Input
+                    className="bg-white"
+                    placeholder="Contact Number"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>
                   Provide a contact number for customers to reach you.
@@ -169,7 +185,11 @@ const AddRestaurant = () => {
               <FormItem>
                 <FormLabel>Contact Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="email@example.com" {...field} />
+                  <Input
+                    className="bg-white"
+                    placeholder="email@example.com"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>
                   Provide an email address for customers to contact you.
@@ -186,7 +206,12 @@ const AddRestaurant = () => {
               <FormItem>
                 <FormLabel>Rating</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="Rating" {...field} />
+                  <Input
+                    className="bg-white"
+                    type="number"
+                    placeholder="Rating"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>
                   Provide a rating for your restaurant (0-5).
@@ -205,7 +230,7 @@ const AddRestaurant = () => {
                 <FormControl>
                   <Textarea
                     placeholder="Describe your restaurant"
-                    className="resize-none"
+                    className="resize-none bg-white"
                     {...field}
                   />
                 </FormControl>

@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import UpdateRestaurantItem from "../UpdateRestaurantItem/UpdateRestaurantItem";
 import AllRestaurantItems from "../AllRestaurantItems/AllRestaurantItems";
+import UpdateRestaurant from "../UpdateRestaurant/UpdateRestaurant";
 
 const AdminRestaurantItems = () => {
   return (
@@ -11,7 +11,7 @@ const AdminRestaurantItems = () => {
           <TabsTrigger value="restaurant-items">Restaurant Items</TabsTrigger>
         </TabsList>
         <TabsContent value="update-restaurant">
-          <UpdateRestaurantItem />
+          <UpdateRestaurant />
         </TabsContent>
         <TabsContent value="restaurant-items">
           <AllRestaurantItems />

@@ -22,16 +22,14 @@ const AdminSidebar = () => {
   ];
 
   return (
-    <div className="flex flex-col h-full p-6 bg-gray-100 dark:bg-gray-900">
-      <h2 className="text-2xl font-bold pb-6 text-gray-800 dark:text-gray-200">
-        Manage Restaurant
-      </h2>
+    <div className="flex flex-col h-full p-6 bg-gray-800 text-white">
+      <h2 className="text-2xl font-bold pb-6">Manage Restaurant</h2>
       <div className="space-y-6">
         {menuItems.map((item) => (
           <Button
             key={item.label}
             variant="ghost"
-            className="flex items-center space-x-2 justify-start w-full text-left text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+            className="flex items-center space-x-2 justify-start w-full text-left hover:bg-gray-200 transition-colors duration-200"
             onClick={() => navigate(item.path)}
           >
             <item.icon className="w-5 h-5" />
@@ -41,7 +39,7 @@ const AdminSidebar = () => {
 
         <Accordion type="single" collapsible>
           <AccordionItem value="restaurants">
-            <AccordionTrigger className="flex items-center space-x-2 w-full text-left text-gray-700 dark:text-gray-300 p-3 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
+            <AccordionTrigger className="flex items-center space-x-2 w-full text-left p-3 hover:bg-gray-200 transition-colors duration-200 hover:text-black">
               <Utensils className="w-5 h-5" />
               <span>Restaurants</span>
             </AccordionTrigger>
@@ -50,7 +48,7 @@ const AdminSidebar = () => {
                 <Button
                   key={item.label}
                   variant="ghost"
-                  className="flex items-center space-x-2 justify-start w-full text-left text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+                  className="flex items-center space-x-2 justify-start w-full text-left hover:bg-gray-200 transition-colors duration-200 hover:text-black"
                   onClick={() => navigate(item.path)}
                 >
                   <span>{item.label}</span>

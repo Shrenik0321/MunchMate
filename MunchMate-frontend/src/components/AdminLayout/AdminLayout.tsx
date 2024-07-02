@@ -4,7 +4,7 @@ import AdminTopBar from "../AdminTopBar/AdminTopBar";
 
 const AdminLayout = () => {
   return (
-    <div className="dark:bg-boxdark-2 dark:text-bodydark">
+    <div className="bg-[#f1f5f9]">
       <div className="flex h-screen overflow-hidden">
         <AdminSidebar />
 
