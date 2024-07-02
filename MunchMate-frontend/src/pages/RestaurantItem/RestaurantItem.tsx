@@ -19,7 +19,7 @@ const RestaurantItem = () => {
     const getRestaurantItems = async () => {
       setLoading(true);
       try {
-        const response = await getAllRestaurantItems();
+        const response = await getAllRestaurantItems({});
         const { data } = response;
         if (data) {
           setRestaurantItems(data);

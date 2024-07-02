@@ -1,6 +1,6 @@
 import { SERVER_URL, baseAxios } from "@/utils/axios";
 
-export async function getAllRestaurantItems() {
+export async function getAllRestaurantItems(requestObj: any) {
   try {
     const headers = {
       "Content-Type": "application/json",
@@ -8,7 +8,7 @@ export async function getAllRestaurantItems() {
 
     const response = await baseAxios.post(
       `${SERVER_URL}/api/restaurant-items/get-restaurant-items`,
-      {},
+      requestObj,
       {
         headers: headers,
         withCredentials: true,
