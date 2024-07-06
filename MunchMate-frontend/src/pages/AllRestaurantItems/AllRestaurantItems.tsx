@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getAllRestaurantItems } from "@/api/getAllRestaurantItems";
 import Loader from "@/components/Loader/Loader";
 import { Plus, Trash } from "lucide-react";
@@ -40,19 +40,22 @@ const AllRestaurantItems = () => {
   const [loading, setLoading] = React.useState(false);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState(null);
-
   const navigate = useNavigate();
-  const location = useLocation();
-  const { restaurant } = location.state || {};
-
   const tableHeaders = ["Name", "Price", "Description", "Actions"];
+
+  const getId = () => {
+    const urlObject = new URL(window.location.href);
+    const pathSegments = urlObject.pathname.split("/");
+    const id = pathSegments[pathSegments.length - 1];
+    return id;
+  };
 
   React.useEffect(() => {
     const getRestaurantItems = async () => {
       setLoading(true);
       try {
         const response = await getAllRestaurantItems({
-          restaurantId: restaurant._id,
+          restaurantId: getId(),
         });
         const { data } = response;
         if (data) {
@@ -66,7 +69,7 @@ const AllRestaurantItems = () => {
     };
 
     getRestaurantItems();
-  }, [restaurant._id]);
+  }, []);
 
   const handleDeleteClick = (restaurantItem: any) => {
     setItemToDelete(restaurantItem);
@@ -93,14 +96,12 @@ const AllRestaurantItems = () => {
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="flex justify-between items-center py-6 px-4 md:px-6 xl:px-7.5">
             <h4 className="text-xl font-semibold text-black dark:text-white">
-              {`All ${restaurant.name} Items`}
+              {`All Restaurant Menu Items`}
             </h4>
             <Button
               className="flex items-center space-x-2"
               onClick={() =>
-                navigate(
-                  `/admin/restaurant/${restaurant._id}/add-restaurant-item`
-                )
+                navigate(`/admin/restaurant/${getId()}/add-restaurant-item`)
               }
             >
               <Plus className="w-5 h-5" />

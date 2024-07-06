@@ -23,8 +23,9 @@ import {
 } from "@/components/ui/select";
 import Loader from "@/components/Loader/Loader";
 import UpdateImageDropzone from "@/components/UpdateImageDropzone/UpdateImageDropzone";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { updateRestaurant } from "@/api/updateRestaurant";
+import { handleToastError, handleToastSuccess } from "@/utils/toast";
 
 const restaurantFormSchema = z.object({
   name: z
@@ -87,6 +88,7 @@ const UpdateRestaurant = () => {
     resolver: zodResolver(restaurantFormSchema),
     mode: "onChange",
   });
+  const navigate = useNavigate();
   const [loading, setLoading] = React.useState(true);
   const [imageUrl, setImageUrl] = React.useState<string | null>(null);
   const location = useLocation();
@@ -108,10 +110,15 @@ const UpdateRestaurant = () => {
         ...data,
       };
       const response = await updateRestaurant(updateData);
-      console.log(response);
+      if (response) {
+        handleToastSuccess(response.message);
+        setTimeout(() => {
+          navigate("/admin/restaurants");
+        }, 2500);
+      }
       // Add your form submission logic here
     } catch (err) {
-      console.log(err);
+      handleToastError("Something went wrong");
     }
   }
 
@@ -121,9 +128,24 @@ const UpdateRestaurant = () => {
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div>
-            <p className="text-3xl font-bold">Update Details</p>
-            <p className="text-xs">Enter the details about your restaurant.</p>
+          <div className="flex justify-between">
+            <div className="flex flex-col space-y-2">
+              <p className="text-3xl font-bold">Update Details</p>
+              <p className="text-xs">
+                Enter the details about your restaurant.
+              </p>
+            </div>
+
+            <div>
+              <Button
+                className="flex items-center space-x-2"
+                onClick={() =>
+                  navigate(`/admin/restaurant-items/${restaurantData._id}`)
+                }
+              >
+                <span>View Restaurant Menu Items</span>
+              </Button>
+            </div>
           </div>
           <FormField
             control={form.control}
@@ -288,7 +310,16 @@ const UpdateRestaurant = () => {
             imageUrl={imageUrl}
             setImageUploadFormData={setImageUploadFormData}
           />
-          <Button type="submit">Update Restaurant</Button>
+
+          <div className="flex space-x-4">
+            <Button type="submit">Update Restaurant</Button>
+            <Button
+              type="button"
+              onClick={() => console.log("View menu items")}
+            >
+              View Restaurant Menu Items
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

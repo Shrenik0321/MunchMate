@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { updateRestaurant } from "@/api/updateRestaurant";
 import UpdateImageDropzone from "@/components/UpdateImageDropzone/UpdateImageDropzone";
 import {
   Select,
@@ -23,8 +22,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Loader from "@/components/Loader/Loader";
+import { handleToastSuccess } from "@/utils/toast";
+import { updateRestaurantItem } from "@/api/updateRestaurantItem";
 
 const restaurantItemFormSchema = z.object({
   name: z
@@ -36,9 +37,9 @@ const restaurantItemFormSchema = z.object({
       message: "Menu Item Name must not be longer than 30 characters.",
     }),
   price: z
-    .string()
+    .number()
     .min(1, {
-      message: "Price must be at least 1 character.",
+      message: "Rating must be a value greater than 1.",
     })
     .max(30, {
       message: "Price must not be longer than 30 characters.",
@@ -59,6 +60,7 @@ type RestaurantFormValues = z.infer<typeof restaurantItemFormSchema>;
 
 const UpdateRestaurantItem = () => {
   const [imageUrl, setImageUrl] = React.useState<string | null>(null);
+  const navigate = useNavigate();
   const [imageUploadFormData, setImageUploadFormData] = React.useState(null);
   const form = useForm<RestaurantFormValues>({
     resolver: zodResolver(restaurantItemFormSchema),
@@ -78,9 +80,18 @@ const UpdateRestaurantItem = () => {
 
   async function onSubmit(data: RestaurantFormValues) {
     try {
-      const finalisedData = { imageFileData: imageUploadFormData, ...data };
-      const response = await updateRestaurant(finalisedData);
-      console.log(response);
+      const updateData = {
+        imageFileData: imageUploadFormData,
+        _id: restaurantItemData._id,
+        ...data,
+      };
+      const response = await updateRestaurantItem(updateData);
+      if (response) {
+        handleToastSuccess(response.message);
+        setTimeout(() => {
+          navigate("/admin/restaurants");
+        }, 2500);
+      }
       // Add your form submission logic here
     } catch (err) {
       console.log(err);

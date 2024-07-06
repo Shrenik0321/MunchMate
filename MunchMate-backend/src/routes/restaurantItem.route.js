@@ -22,6 +22,7 @@ restaurantItemRouter.post(
 restaurantItemRouter.post(
   "/update-restaurant-item",
   requireAuth,
+  fileUploadMiddleware,
   updateRestaurantItemsController
 );
 

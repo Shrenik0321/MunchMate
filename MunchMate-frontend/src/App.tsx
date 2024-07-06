@@ -20,9 +20,10 @@ import AdminOrders from "./pages/AdminOrders/AdminOrders";
 import AddRestaurant from "./pages/AddRestaurant/AddRestaurant";
 import AllRestaurants from "./pages/AllRestaurants/AllRestaurants";
 import AdminLayout from "./components/AdminLayout/AdminLayout";
-import AdminRestaurantItems from "./pages/AdminRestaurantItems/AdminRestaurantItems";
 import AddRestaurantItem from "./pages/AddRestaurantItem/AddRestaurantItem";
 import UpdateRestaurantItem from "./pages/UpdateRestaurantItem/UpdateRestaurantItem";
+import UpdateRestaurant from "./pages/UpdateRestaurant/UpdateRestaurant";
+import AllRestaurantItems from "./pages/AllRestaurantItems/AllRestaurantItems";
 
 function App() {
   return (
@@ -51,7 +52,11 @@ function App() {
               <Route path="/admin/add-restaurant" element={<AddRestaurant />} />
               <Route
                 path="/admin/restaurant/:id"
-                element={<AdminRestaurantItems />}
+                element={<UpdateRestaurant />}
+              />
+              <Route
+                path="/admin/restaurant-items/:id"
+                element={<AllRestaurantItems />}
               />
               <Route
                 path="/admin/restaurant/:id/add-restaurant-item"
