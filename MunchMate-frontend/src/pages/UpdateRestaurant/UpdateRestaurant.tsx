@@ -313,12 +313,6 @@ const UpdateRestaurant = () => {
 
           <div className="flex space-x-4">
             <Button type="submit">Update Restaurant</Button>
-            <Button
-              type="button"
-              onClick={() => console.log("View menu items")}
-            >
-              View Restaurant Menu Items
-            </Button>
           </div>
         </form>
       </Form>
