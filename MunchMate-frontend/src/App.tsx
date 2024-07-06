@@ -22,6 +22,7 @@ import AllRestaurants from "./pages/AllRestaurants/AllRestaurants";
 import AdminLayout from "./components/AdminLayout/AdminLayout";
 import AdminRestaurantItems from "./pages/AdminRestaurantItems/AdminRestaurantItems";
 import AddRestaurantItem from "./pages/AddRestaurantItem/AddRestaurantItem";
+import UpdateRestaurantItem from "./pages/UpdateRestaurantItem/UpdateRestaurantItem";
 
 function App() {
   return (
@@ -55,6 +56,10 @@ function App() {
               <Route
                 path="/admin/restaurant/:id/add-restaurant-item"
                 element={<AddRestaurantItem />}
+              />
+              <Route
+                path="/admin/restaurant-item/:id"
+                element={<UpdateRestaurantItem />}
               />
             </Route>
           </Route>

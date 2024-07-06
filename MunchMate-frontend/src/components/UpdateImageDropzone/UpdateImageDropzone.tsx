@@ -6,7 +6,7 @@ const UpdateImageDropzone = ({
   imageUrl,
   setImageUploadFormData,
 }: {
-  imageUrl: string | null;
+  imageUrl?: string | null;
   setImageUploadFormData: React.Dispatch<any>;
 }) => {
   const handleFileUpload = async (acceptedFiles: any) => {
@@ -31,7 +31,7 @@ const UpdateImageDropzone = ({
             <div className="flex items-center justify-center h-full w-full bg-zinc-200 hover:bg-zinc-300">
               <label
                 htmlFor="dropzone-file"
-                className="flex flex-col items-center justify-center pt-5 pb-6 text-white"
+                className="flex flex-col items-center justify-center pt-5 pb-6 text-black"
               >
                 <p className="mb-2 text-sm">
                   <span className="font-bold">

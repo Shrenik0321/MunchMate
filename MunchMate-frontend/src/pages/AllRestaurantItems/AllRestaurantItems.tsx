@@ -14,15 +14,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm }: any) => {
   return (
@@ -54,13 +45,7 @@ const AllRestaurantItems = () => {
   const location = useLocation();
   const { restaurant } = location.state || {};
 
-  const tableHeaders = [
-    "Name",
-    "Price",
-    "Description",
-    "Ingredients",
-    "Actions",
-  ];
+  const tableHeaders = ["Name", "Price", "Description", "Actions"];
 
   React.useEffect(() => {
     const getRestaurantItems = async () => {
@@ -122,19 +107,11 @@ const AllRestaurantItems = () => {
               <span>Add Item</span>
             </Button>
           </div>
-          <div className="grid grid-cols-12 border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5">
+          <div className="grid grid-cols-10 border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5">
             {tableHeaders.map((header, index) => (
               <div
                 className={`col-span-${
-                  index === 1
-                    ? 1
-                    : index === 2
-                    ? 3
-                    : index === 3
-                    ? 4
-                    : index === 4
-                    ? 1
-                    : 3
+                  index === 1 ? 2 : index === 2 ? 4 : index === 3 ? 1 : 3
                 } flex items-center`}
                 key={header}
               >
@@ -144,8 +121,13 @@ const AllRestaurantItems = () => {
           </div>
           {restaurantItems.map((item: any, key: number) => (
             <div
-              className="grid grid-cols-12 border-t border-stroke py-3 dark:border-strokedark md:px-6 2xl:px-7.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors duration-200"
+              className="grid grid-cols-10 border-t border-stroke py-3 dark:border-strokedark md:px-6 2xl:px-7.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors duration-200"
               key={key}
+              onClick={() =>
+                navigate(`/admin/restaurant-item/${item._id}`, {
+                  state: { item },
+                })
+              }
             >
               <div
                 className="col-span-3 flex items-center"
@@ -169,40 +151,19 @@ const AllRestaurantItems = () => {
                 </div>
               </div>
 
-              <div className="col-span-1 flex items-center">
+              <div className="col-span-2 flex items-center">
                 <p className="text-sm text-black dark:text-white">
                   {item.price}
                 </p>
               </div>
 
-              <div className="col-span-3 flex items-center">
+              <div className="col-span-4 flex items-center">
                 <p className="text-sm text-black dark:text-white">
                   {item.description}
                 </p>
               </div>
 
-              <div className="col-span-4 flex items-center">
-                <Select>
-                  <SelectTrigger className="w-[75%] mx-2">
-                    <SelectValue placeholder="Ingredients" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Ingredients</SelectLabel>
-                      {item.ingredients &&
-                        item.ingredients.map(
-                          (ingredient: string, index: number) => (
-                            <SelectItem key={index} value={ingredient}>
-                              <span>{ingredient}</span>
-                            </SelectItem>
-                          )
-                        )}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="col-span-1 flex items-center space-x-2">
+              <div className="col-span-1 flex items-center space-x-2 m-auto">
                 <Trash
                   className="w-5 h-5 text-red-500 cursor-pointer"
                   onClick={(e) => {
