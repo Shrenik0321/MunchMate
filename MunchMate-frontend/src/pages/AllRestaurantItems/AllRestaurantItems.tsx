@@ -68,8 +68,8 @@ const AllRestaurantItems = () => {
     getRestaurantItems();
   }, [restaurant._id]);
 
-  const handleDeleteClick = (item: any) => {
-    setItemToDelete(item);
+  const handleDeleteClick = (restaurantItem: any) => {
+    setItemToDelete(restaurantItem);
     setIsModalOpen(true);
   };
 
@@ -119,47 +119,47 @@ const AllRestaurantItems = () => {
               </div>
             ))}
           </div>
-          {restaurantItems.map((item: any, key: number) => (
+          {restaurantItems.map((restaurantItem: any, key: number) => (
             <div
               className="grid grid-cols-10 border-t border-stroke py-3 dark:border-strokedark md:px-6 2xl:px-7.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors duration-200"
               key={key}
               onClick={() =>
-                navigate(`/admin/restaurant-item/${item._id}`, {
-                  state: { item },
+                navigate(`/admin/restaurant-item/${restaurantItem._id}`, {
+                  state: { restaurantItem },
                 })
               }
             >
               <div
                 className="col-span-3 flex items-center"
                 onClick={() =>
-                  navigate(`/admin/restaurant/item/${item._id}`, {
-                    state: { restaurant: item },
+                  navigate(`/admin/restaurant/item/${restaurantItem._id}`, {
+                    state: { restaurant: restaurantItem },
                   })
                 }
               >
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <div className="rounded-md w-24 h-24 overflow-hidden">
                     <img
-                      src={item.imageUrl}
+                      src={restaurantItem.imageUrl}
                       alt="Product"
                       className="object-cover w-full h-full"
                     />
                   </div>
                   <p className="text-sm text-black dark:text-white">
-                    {item.name}
+                    {restaurantItem.name}
                   </p>
                 </div>
               </div>
 
               <div className="col-span-2 flex items-center">
                 <p className="text-sm text-black dark:text-white">
-                  {item.price}
+                  {restaurantItem.price}
                 </p>
               </div>
 
               <div className="col-span-4 flex items-center">
                 <p className="text-sm text-black dark:text-white">
-                  {item.description}
+                  {restaurantItem.description}
                 </p>
               </div>
 
@@ -168,7 +168,7 @@ const AllRestaurantItems = () => {
                   className="w-5 h-5 text-red-500 cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleDeleteClick(item);
+                    handleDeleteClick(restaurantItem);
                   }}
                 />
               </div>

@@ -23,9 +23,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useLocation } from "react-router-dom";
+import Loader from "@/components/Loader/Loader";
 
 const restaurantItemFormSchema = z.object({
-  itemName: z
+  name: z
     .string()
     .min(2, {
       message: "Menu Item Name must be at least 2 characters.",
@@ -56,11 +58,23 @@ const restaurantItemFormSchema = z.object({
 type RestaurantFormValues = z.infer<typeof restaurantItemFormSchema>;
 
 const UpdateRestaurantItem = () => {
+  const [imageUrl, setImageUrl] = React.useState<string | null>(null);
   const [imageUploadFormData, setImageUploadFormData] = React.useState(null);
   const form = useForm<RestaurantFormValues>({
     resolver: zodResolver(restaurantItemFormSchema),
     mode: "onChange",
   });
+  const location = useLocation();
+  const restaurantItemData = location.state?.restaurantItem;
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    if (restaurantItemData) {
+      form.reset(restaurantItemData);
+      setImageUrl(restaurantItemData.imageUrl);
+      setLoading(false);
+    }
+  }, [restaurantItemData, form]);
 
   async function onSubmit(data: RestaurantFormValues) {
     try {
@@ -73,6 +87,8 @@ const UpdateRestaurantItem = () => {
     }
   }
 
+  if (loading) return <Loader />;
+
   return (
     <div>
       <Form {...form}>
@@ -83,7 +99,7 @@ const UpdateRestaurantItem = () => {
           </div>
           <FormField
             control={form.control}
-            name="itemName"
+            name="name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Menu Item Name</FormLabel>
@@ -167,7 +183,7 @@ const UpdateRestaurantItem = () => {
           />
 
           <UpdateImageDropzone
-            // imageUrl={imageUrl}
+            imageUrl={imageUrl}
             setImageUploadFormData={setImageUploadFormData}
           />
           <Button type="submit">Update Menu Item</Button>
