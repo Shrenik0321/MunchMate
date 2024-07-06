@@ -1,16 +1,16 @@
 import { baseAxios, SERVER_URL } from "@/utils/axios";
 
-export const updateRestaurant = async (finalisedData: any) => {
+export const updateRestaurant = async (updateData: any) => {
   const formData = new FormData();
 
-  for (const key in finalisedData) {
-    if (finalisedData.hasOwnProperty(key)) {
+  for (const key in updateData) {
+    if (updateData.hasOwnProperty(key)) {
       if (key === "tags") {
-        finalisedData.tags.forEach((tag: any, index: any) =>
+        updateData.tags.forEach((tag: any, index: any) =>
           formData.append(`tags[${index}]`, tag)
         );
       } else {
-        formData.append(key, finalisedData[key]);
+        formData.append(key, updateData[key]);
       }
     }
   }

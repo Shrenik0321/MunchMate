@@ -19,6 +19,7 @@ restaurantRouter.post(
 restaurantRouter.post(
   "/update-restaurant",
   requireAuth,
+  fileUploadMiddleware,
   updateRestaurantController
 );
 

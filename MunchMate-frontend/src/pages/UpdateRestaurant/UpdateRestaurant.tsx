@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { addRestaurant } from "@/api/addRestaurant";
 import {
   Select,
   SelectContent,
@@ -22,9 +21,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getAllRestaurants } from "@/api/getAllRestaurants";
 import Loader from "@/components/Loader/Loader";
 import UpdateImageDropzone from "@/components/UpdateImageDropzone/UpdateImageDropzone";
+import { useLocation } from "react-router-dom";
+import { updateRestaurant } from "@/api/updateRestaurant";
 
 const restaurantFormSchema = z.object({
   name: z
@@ -32,25 +32,25 @@ const restaurantFormSchema = z.object({
     .min(2, {
       message: "Restaurant Name must be at least 2 characters.",
     })
-    .max(30, {
-      message: "Restaurant Name must not be longer than 30 characters.",
+    .max(50, {
+      message: "Restaurant Name must not be longer than 50 characters.",
     }),
   address: z
     .string()
     .min(2, {
       message: "Restaurant Address must be at least 2 characters.",
     })
-    .max(30, {
-      message: "Restaurant Address must not be longer than 30 characters.",
+    .max(50, {
+      message: "Restaurant Address must not be longer than 50 characters.",
     }),
   contactNumber: z
     .string()
     .min(2, {
       message: "Restaurant Contact Number must be at least 2 characters.",
     })
-    .max(30, {
+    .max(50, {
       message:
-        "Restaurant Contact Number must not be longer than 30 characters.",
+        "Restaurant Contact Number must not be longer than 50 characters.",
     }),
   email: z
     .string({
@@ -88,31 +88,26 @@ const UpdateRestaurant = () => {
     mode: "onChange",
   });
   const [loading, setLoading] = React.useState(true);
-  const [imageUrl, setImageUrl] = React.useState<string | null>(null); // State for image URL
+  const [imageUrl, setImageUrl] = React.useState<string | null>(null);
+  const location = useLocation();
+  const restaurantData = location.state?.restaurant;
 
   React.useEffect(() => {
-    const getRestaurants = async () => {
-      try {
-        const response = await getAllRestaurants({});
-        const { data } = response;
-        if (data && data.length > 0) {
-          setImageUrl(data[0].imageUrl);
-          form.reset(data[0]);
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getRestaurants();
-  }, []);
+    if (restaurantData) {
+      form.reset(restaurantData);
+      setImageUrl(restaurantData.imageUrl);
+      setLoading(false);
+    }
+  }, [restaurantData, form]);
 
   async function onSubmit(data: RestaurantFormValues) {
     try {
-      const finalisedData = { imageFileData: imageUploadFormData, ...data };
-      const response = await addRestaurant(finalisedData);
+      const updateData = {
+        imageFileData: imageUploadFormData,
+        _id: restaurantData._id,
+        ...data,
+      };
+      const response = await updateRestaurant(updateData);
       console.log(response);
       // Add your form submission logic here
     } catch (err) {
