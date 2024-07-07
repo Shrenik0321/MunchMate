@@ -30,20 +30,21 @@ function App() {
     <div>
       <ToastContainer />
       <Routes>
-        {/* Public Routes */}
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/dashboard-sign-in" element={<DashboardSignIn />} />
-        <Route path="/dashboard-sign-up" element={<DashboardSignUp />} />
-        <Route path="/unauthorised" element={<Unauthorised />} />
-
-        <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/order-status" element={<OrderStatus />} />
-          <Route />
-        </Route>
-
-        {/* Private Routes */}
         <Route path="/" element={<PersistLogin />}>
+          {/* Public Routes */}
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/dashboard-sign-in" element={<DashboardSignIn />} />
+          <Route path="/dashboard-sign-up" element={<DashboardSignUp />} />
+          <Route path="/unauthorised" element={<Unauthorised />} />
+
+          <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/order-status" element={<OrderStatus />} />
+            <Route />
+          </Route>
+
+          {/* Private Routes */}
+          {/* <Route path="/" element={<PersistLogin />}> */}
           <Route path="/" element={<AdminPrivateRoute />}>
             <Route path="/" element={<AdminLayout />}>
               <Route path="/admin/overview" element={<AdminOverview />} />

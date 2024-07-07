@@ -1,28 +1,36 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { MapPin } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MenuItem from "@/components/MenuItem/MenuItem";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 import PaginationComponent from "@/components/Pagination/Pagination";
-import { getAllRestaurantItems } from "@/api/getAllRestaurantItems";
+import { getRestaurantWithAllRestaurantItems } from "@/api/getRestaurantWithAllRestaurantItems";
 import Loader from "@/components/Loader/Loader";
 
 const RestaurantItem = () => {
-  const location = useLocation();
-  const itemData = location.state?.data;
-  const [restaurantItems, setRestaurantItems] = React.useState([]);
+  const [restaurantWithRestaurantItems, setRestaurantWithRestaurantItems] =
+    React.useState<any>(null);
   const [loading, setLoading] = React.useState(false);
 
+  const getId = () => {
+    const urlObject = new URL(window.location.href);
+    const pathSegments = urlObject.pathname.split("/");
+    const id = pathSegments[pathSegments.length - 1];
+    return id;
+  };
+
   React.useEffect(() => {
-    const getRestaurantItems = async () => {
+    const getRestaurantWithRestaurantItems = async () => {
       setLoading(true);
       try {
-        const response = await getAllRestaurantItems({});
-        const { data } = response;
-        if (data) {
-          setRestaurantItems(data);
+        const response = await getRestaurantWithAllRestaurantItems({
+          id: getId(),
+        });
+
+        if (response) {
+          console.log(response);
+          setRestaurantWithRestaurantItems(response);
         }
       } catch (error) {
         console.log(error);
@@ -31,7 +39,7 @@ const RestaurantItem = () => {
       }
     };
 
-    getRestaurantItems();
+    getRestaurantWithRestaurantItems();
   }, []);
 
   return (
@@ -50,7 +58,7 @@ const RestaurantItem = () => {
             <div className="grid grid-rows-2">
               <div className="col-span-1 h-72">
                 <img
-                  src={itemData.imageUrl}
+                  src={restaurantWithRestaurantItems?.imageUrl}
                   alt="RestaurantItem Image"
                   className="w-full h-full object-cover rounded-xl"
                 />
@@ -61,29 +69,35 @@ const RestaurantItem = () => {
                   <div className="flex my-2 justify-between">
                     <div>
                       <p className="text-4xl font-bold cursor-pointer">
-                        {itemData.name}
+                        {restaurantWithRestaurantItems?.name}
                       </p>
                     </div>
                   </div>
                   <div className="flex gap-2 my-2">
-                    {itemData.tags.map((tagItem: any, index: number) => (
-                      <Badge
-                        key={index}
-                        variant="outline"
-                        className="border-gray-500"
-                      >
-                        {tagItem}
-                      </Badge>
-                    ))}
+                    {restaurantWithRestaurantItems?.tags.map(
+                      (tagItem: any, index: number) => (
+                        <Badge
+                          key={index}
+                          variant="outline"
+                          className="border-gray-500"
+                        >
+                          {tagItem}
+                        </Badge>
+                      )
+                    )}
                   </div>
                   <div className="flex my-2">
                     <div>
                       <MapPin />
                     </div>
-                    <p className="text-md">{itemData.address}</p>
+                    <p className="text-md">
+                      {restaurantWithRestaurantItems?.address}
+                    </p>
                   </div>
                   <div className="my-2">
-                    <p className="text-[#52525b]">{itemData.description}</p>
+                    <p className="text-[#52525b]">
+                      {restaurantWithRestaurantItems?.description}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -107,11 +121,14 @@ const RestaurantItem = () => {
                 </TabsList>
                 <TabsContent value="all">
                   <div className="grid grid-cols-4 gap-4">
-                    {restaurantItems.map((item) => (
-                      <div className="my-2">
-                        <MenuItem item={item} />
-                      </div>
-                    ))}
+                    {restaurantWithRestaurantItems?.items?.length > 0 &&
+                      restaurantWithRestaurantItems?.items.map(
+                        (item: any, index: number) => (
+                          <div className="my-2" key={index}>
+                            <MenuItem item={item} />
+                          </div>
+                        )
+                      )}
                   </div>
                 </TabsContent>
                 <TabsContent value="breakfast">Breakfast</TabsContent>

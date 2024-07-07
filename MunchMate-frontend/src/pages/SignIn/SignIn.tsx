@@ -12,10 +12,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { handleToastError, handleToastSuccess } from "@/utils/toast";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const {
     register,
     handleSubmit,
@@ -28,7 +31,7 @@ const SignIn = () => {
       if (response) {
         handleToastSuccess(response.message);
         setTimeout(() => {
-          navigate("/checkout");
+          navigate(from, { replace: true });
         }, 2500);
       }
     } catch (err) {

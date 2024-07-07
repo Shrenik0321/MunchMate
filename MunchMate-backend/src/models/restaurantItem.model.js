@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const restaurantItemSchema = new mongoose.Schema(
   {
     restaurantId: {
-      type: String,
+      type: mongoose.Types.ObjectId,
+      ref: "restaurants",
       required: [true, "Restaurant ID is required."],
     },
     name: {

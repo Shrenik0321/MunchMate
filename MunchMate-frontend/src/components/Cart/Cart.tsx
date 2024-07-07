@@ -7,7 +7,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useCartContext } from "@/hooks/useCartContext";
 
@@ -15,6 +15,7 @@ const Cart = () => {
   const { cart, setCart } = useCartContext();
   const [cartItems, setCartItems] = React.useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
   const { auth } = useAuthContext();
 
   const total = cartItems
@@ -96,7 +97,7 @@ const Cart = () => {
                   <Button
                     className="bg-orange-500"
                     onClick={() => {
-                      navigate("/sign-in");
+                      navigate("/sign-in", { state: { from: location } });
                     }}
                   >
                     Login

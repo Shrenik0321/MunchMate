@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SideBar from "../SideBar/SideBar";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { Button } from "../ui/button";
@@ -8,6 +8,8 @@ import SearchBar from "../SearchBar/SearchBar";
 const Navbar = () => {
   const navigate = useNavigate();
   const { auth } = useAuthContext();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   return (
     <nav className="sticky bg-white opacity-[.8] top-0 z-50 shadow-md">
@@ -45,7 +47,7 @@ const Navbar = () => {
               <Button
                 className="bg-orange-500 rounded-full"
                 onClick={() => {
-                  navigate("/sign-in");
+                  navigate("/sign-in", { state: { from: location } });
                 }}
               >
                 Login

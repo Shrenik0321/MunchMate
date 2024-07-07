@@ -1,4 +1,5 @@
 import RestaurantItem from "../models/restaurantItem.model.js";
+import mongoose from "mongoose";
 
 const getRestaurantItemController = async (req, res) => {
   try {
@@ -6,11 +7,21 @@ const getRestaurantItemController = async (req, res) => {
 
     if (id || name || restaurantId) {
       const query = {};
-      if (id) query._id = id;
-      if (name) query.name = name;
-      if (restaurantId) query.restaurantId = restaurantId;
 
-      const restaurantItem = await RestaurantItem.findOne(query);
+      if (id) {
+        query._id = id;
+      }
+      if (name) {
+        query.name = name;
+      }
+      if (restaurantId) {
+        const objectId =
+          mongoose.Types.ObjectId.createFromHexString(restaurantId);
+        query.restaurantId = objectId;
+      }
+
+      const restaurantItem = await RestaurantItem.find(query);
+
       if (!restaurantItem) {
         return res.status(404).json({
           message: "Restaurant item not found.",

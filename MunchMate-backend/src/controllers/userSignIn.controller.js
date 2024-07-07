@@ -34,7 +34,7 @@ export const userSignInController = async (req, res) => {
       httpOnly: true, // Enhances security by preventing client-side scripts from accessing the cookie
       secure: NODE_ENV, // Ensures the cookie is only transmitted over secure HTTPS connections
       sameSite: "None", // Prevent CSRF attacks
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      maxAge: 1 * 24 * 60 * 60 * 1000, // 7 days
     });
 
     return res.status(200).json({
