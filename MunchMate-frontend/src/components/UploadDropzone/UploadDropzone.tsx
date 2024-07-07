@@ -3,9 +3,8 @@ import Dropzone from "react-dropzone";
 
 const UploadDropzone = ({ setImageUploadFormData }: any) => {
   const handleFileUpload = async (acceptedFiles: any) => {
-    // const formData = new FormData();
-    // formData.append("imageFileData", acceptedFiles[0]);
-    setImageUploadFormData(acceptedFiles[0]);
+    const file = acceptedFiles[0];
+    setImageUploadFormData(file);
   };
 
   return (

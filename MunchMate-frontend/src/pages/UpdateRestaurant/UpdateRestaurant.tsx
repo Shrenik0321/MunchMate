@@ -104,6 +104,7 @@ const UpdateRestaurant = () => {
 
   async function onSubmit(data: RestaurantFormValues) {
     try {
+      setLoading(true);
       const updateData = {
         imageFileData: imageUploadFormData,
         _id: restaurantData._id,
@@ -111,6 +112,7 @@ const UpdateRestaurant = () => {
       };
       const response = await updateRestaurant(updateData);
       if (response) {
+        setLoading(false);
         handleToastSuccess(response.message);
         setTimeout(() => {
           navigate("/admin/restaurants");

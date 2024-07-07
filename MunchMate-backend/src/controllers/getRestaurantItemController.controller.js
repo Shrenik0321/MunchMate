@@ -2,12 +2,13 @@ import RestaurantItem from "../models/restaurantItem.model.js";
 
 const getRestaurantItemController = async (req, res) => {
   try {
-    const { id, name } = req.body;
+    const { id, name, restaurantId } = req.body;
 
-    if (id || name) {
+    if (id || name || restaurantId) {
       const query = {};
       if (id) query._id = id;
       if (name) query.name = name;
+      if (restaurantId) query.restaurantId = restaurantId;
 
       const restaurantItem = await RestaurantItem.findOne(query);
       if (!restaurantItem) {

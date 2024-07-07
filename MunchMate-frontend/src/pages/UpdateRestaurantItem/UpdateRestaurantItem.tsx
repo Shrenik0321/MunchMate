@@ -80,6 +80,7 @@ const UpdateRestaurantItem = () => {
 
   async function onSubmit(data: RestaurantFormValues) {
     try {
+      setLoading(true);
       const updateData = {
         imageFileData: imageUploadFormData,
         _id: restaurantItemData._id,
@@ -87,6 +88,7 @@ const UpdateRestaurantItem = () => {
       };
       const response = await updateRestaurantItem(updateData);
       if (response) {
+        setLoading(false);
         handleToastSuccess(response.message);
         setTimeout(() => {
           navigate("/admin/restaurants");

@@ -96,7 +96,7 @@ const AllRestaurantItems = () => {
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="flex justify-between items-center py-6 px-4 md:px-6 xl:px-7.5">
             <h4 className="text-xl font-semibold text-black dark:text-white">
-              {`All Restaurant Menu Items`}
+              All Restaurant Menu Items
             </h4>
             <Button
               className="flex items-center space-x-2"
@@ -108,73 +108,82 @@ const AllRestaurantItems = () => {
               <span>Add Item</span>
             </Button>
           </div>
-          <div className="grid grid-cols-10 border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5">
-            {tableHeaders.map((header, index) => (
-              <div
-                className={`col-span-${
-                  index === 1 ? 2 : index === 2 ? 4 : index === 3 ? 1 : 3
-                } flex items-center`}
-                key={header}
-              >
-                <p className="font-medium">{header}</p>
+
+          {restaurantItems.length === 0 ? (
+            <div className="py-10 text-center text-gray-500 dark:text-gray-400">
+              No Restaurant Menu Items found.
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-10 border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5">
+                {tableHeaders.map((header, index) => (
+                  <div
+                    className={`col-span-${
+                      index === 1 ? 2 : index === 2 ? 4 : index === 3 ? 1 : 3
+                    } flex items-center`}
+                    key={header}
+                  >
+                    <p className="font-medium">{header}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          {restaurantItems.map((restaurantItem: any, key: number) => (
-            <div
-              className="grid grid-cols-10 border-t border-stroke py-3 dark:border-strokedark md:px-6 2xl:px-7.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors duration-200"
-              key={key}
-              onClick={() =>
-                navigate(`/admin/restaurant-item/${restaurantItem._id}`, {
-                  state: { restaurantItem },
-                })
-              }
-            >
-              <div
-                className="col-span-3 flex items-center"
-                onClick={() =>
-                  navigate(`/admin/restaurant/item/${restaurantItem._id}`, {
-                    state: { restaurant: restaurantItem },
-                  })
-                }
-              >
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <div className="rounded-md w-24 h-24 overflow-hidden">
-                    <img
-                      src={restaurantItem.imageUrl}
-                      alt="Product"
-                      className="object-cover w-full h-full"
+              {restaurantItems.map((restaurantItem: any, key: number) => (
+                <div
+                  className="grid grid-cols-10 border-t border-stroke py-3 dark:border-strokedark md:px-6 2xl:px-7.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors duration-200"
+                  key={key}
+                  onClick={() =>
+                    navigate(`/admin/restaurant-item/${restaurantItem._id}`, {
+                      state: { restaurantItem },
+                    })
+                  }
+                >
+                  <div
+                    className="col-span-3 flex items-center"
+                    onClick={() =>
+                      navigate(`/admin/restaurant/item/${restaurantItem._id}`, {
+                        state: { restaurant: restaurantItem },
+                      })
+                    }
+                  >
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                      <div className="rounded-md w-24 h-24 overflow-hidden">
+                        <img
+                          src={restaurantItem.imageUrl}
+                          alt="Product"
+                          className="object-cover w-full h-full"
+                        />
+                      </div>
+                      <p className="text-sm text-black dark:text-white">
+                        {restaurantItem.name}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="col-span-2 flex items-center">
+                    <p className="text-sm text-black dark:text-white">
+                      {restaurantItem.price}
+                    </p>
+                  </div>
+
+                  <div className="col-span-4 flex items-center">
+                    <p className="text-sm text-black dark:text-white">
+                      {restaurantItem.description}
+                    </p>
+                  </div>
+
+                  <div className="col-span-1 flex items-center space-x-2 m-auto">
+                    <Trash
+                      className="w-5 h-5 text-red-500 cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteClick(restaurantItem);
+                      }}
                     />
                   </div>
-                  <p className="text-sm text-black dark:text-white">
-                    {restaurantItem.name}
-                  </p>
                 </div>
-              </div>
-
-              <div className="col-span-2 flex items-center">
-                <p className="text-sm text-black dark:text-white">
-                  {restaurantItem.price}
-                </p>
-              </div>
-
-              <div className="col-span-4 flex items-center">
-                <p className="text-sm text-black dark:text-white">
-                  {restaurantItem.description}
-                </p>
-              </div>
-
-              <div className="col-span-1 flex items-center space-x-2 m-auto">
-                <Trash
-                  className="w-5 h-5 text-red-500 cursor-pointer"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDeleteClick(restaurantItem);
-                  }}
-                />
-              </div>
-            </div>
-          ))}
+              ))}
+            </>
+          )}
         </div>
       )}
       <DeleteConfirmationModal

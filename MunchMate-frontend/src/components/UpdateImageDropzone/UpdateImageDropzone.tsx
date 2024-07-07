@@ -9,9 +9,11 @@ const UpdateImageDropzone = ({
   imageUrl?: string | null;
   setImageUploadFormData: React.Dispatch<any>;
 }) => {
+  const [newImage, setNewImage] = React.useState(false);
   const handleFileUpload = async (acceptedFiles: any) => {
     const file = acceptedFiles[0];
     setImageUploadFormData(file);
+    setNewImage(true);
   };
 
   return (
@@ -22,7 +24,7 @@ const UpdateImageDropzone = ({
             {...getRootProps()}
             className="relative border h-64 w-64 sm:w-auto m-4 border-dashed border-gray-500 rounded-lg overflow-hidden"
           >
-            {imageUrl && (
+            {imageUrl && !newImage && (
               <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{ backgroundImage: `url(${imageUrl})` }}
@@ -41,7 +43,7 @@ const UpdateImageDropzone = ({
                 <p className="text-xs text-zinc-500">PDF (up to 4MB)</p>
 
                 {acceptedFiles && acceptedFiles[0] && (
-                  <div className="flex items-center bg-white bg-opacity-25 hover:bg-opacity-50 border border-zinc-100 px-2 mx-2 max-w-xs rounded">
+                  <div className="flex items-center bg-white bg-opacity-25 hover:bg-opacity-50 border border-zinc-100 px-2 mx-2 max-w-xs rounded text-black">
                     <File className="h-4 w-4 text-[#ef4444]" />
                     <div className="p-2 text-sm truncate text-white">
                       {acceptedFiles[0].name}

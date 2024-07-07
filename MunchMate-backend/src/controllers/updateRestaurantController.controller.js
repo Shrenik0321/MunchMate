@@ -1,14 +1,28 @@
 import Restaurant from "../models/restaurant.model.js";
+import {
+  ImageDeleteFunc,
+  ImageUploadFunc,
+} from "../utils/firebaseImageHandle.js";
 
 const updateRestaurantController = async (req, res) => {
   try {
-    const { _id, ...updateData } = req.body;
+    let { _id, ...updateData } = req.body;
 
     // Ensure the ID and data are valid
     if (!_id || !updateData) {
       return res
         .status(400)
         .json({ message: "Invalid request, Missing ID or data." });
+    }
+
+    if (req.files && req.files["imageFileData"]) {
+      let imageUrl;
+      const restaurantToBeUpdated = await Restaurant.findById(_id);
+      const imageFileData = req.files["imageFileData"];
+      imageUrl = await ImageUploadFunc(imageFileData, "restaurants");
+      await ImageDeleteFunc(restaurantToBeUpdated.imageUrl);
+
+      updateData = { ...updateData, imageUrl: imageUrl };
     }
 
     // Find the restaurant by ID and update it with the new data

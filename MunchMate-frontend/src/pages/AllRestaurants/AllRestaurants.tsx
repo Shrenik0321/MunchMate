@@ -64,56 +64,65 @@ const AllRestaurants = () => {
               </div>
             ))}
           </div>
-          {restaurants.map((restaurant: any, key: number) => (
-            <div
-              className="grid grid-cols-12 border-t border-stroke py-3 dark:border-strokedark sm:grid-cols-12 md:px-6 2xl:px-7.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors duration-200"
-              key={key}
-              onClick={() =>
-                navigate(`/admin/restaurant/${restaurant._id}`, {
-                  state: { restaurant },
-                })
-              }
-            >
-              <div className="col-span-3 flex items-center">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <div className="rounded-md w-24 h-24 overflow-hidden">
-                    <img
-                      src={restaurant.imageUrl}
-                      alt="Restaurant"
-                      className="object-cover w-full h-full"
+
+          {restaurants.length === 0 ? (
+            <div className="py-10 text-center text-gray-500 dark:text-gray-400">
+              No Restaurants found.
+            </div>
+          ) : (
+            <>
+              {restaurants.map((restaurant: any, key: number) => (
+                <div
+                  className="grid grid-cols-12 border-t border-stroke py-3 dark:border-strokedark sm:grid-cols-12 md:px-6 2xl:px-7.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors duration-200"
+                  key={key}
+                  onClick={() =>
+                    navigate(`/admin/restaurant/${restaurant._id}`, {
+                      state: { restaurant },
+                    })
+                  }
+                >
+                  <div className="col-span-3 flex items-center">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                      <div className="rounded-md w-24 h-24 overflow-hidden">
+                        <img
+                          src={restaurant.imageUrl}
+                          alt="Restaurant"
+                          className="object-cover w-full h-full"
+                        />
+                      </div>
+                      <p className="text-sm text-black dark:text-white">
+                        {restaurant.name}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="col-span-3 flex items-center">
+                    <p className="text-sm text-black dark:text-white">
+                      {restaurant.email}
+                    </p>
+                  </div>
+                  <div className="col-span-2 flex items-center">
+                    <p className="text-sm text-black dark:text-white">
+                      {restaurant.contactNumber}
+                    </p>
+                  </div>
+                  <div className="col-span-3 flex items-center">
+                    <p className="text-sm text-black dark:text-white">
+                      {restaurant.address}
+                    </p>
+                  </div>
+                  <div className="col-span-1 flex items-center justify-center">
+                    <Trash
+                      className="w-5 h-5 text-red-500 cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(restaurant._id);
+                      }}
                     />
                   </div>
-                  <p className="text-sm text-black dark:text-white">
-                    {restaurant.name}
-                  </p>
                 </div>
-              </div>
-              <div className="col-span-3 flex items-center">
-                <p className="text-sm text-black dark:text-white">
-                  {restaurant.email}
-                </p>
-              </div>
-              <div className="col-span-2 flex items-center">
-                <p className="text-sm text-black dark:text-white">
-                  {restaurant.contactNumber}
-                </p>
-              </div>
-              <div className="col-span-3 flex items-center">
-                <p className="text-sm text-black dark:text-white">
-                  {restaurant.address}
-                </p>
-              </div>
-              <div className="col-span-1 flex items-center justify-center">
-                <Trash
-                  className="w-5 h-5 text-red-500 cursor-pointer"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDelete(restaurant._id);
-                  }}
-                />
-              </div>
-            </div>
-          ))}
+              ))}
+            </>
+          )}
         </div>
       )}
     </>

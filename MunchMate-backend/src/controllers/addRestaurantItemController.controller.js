@@ -1,5 +1,5 @@
 import RestaurantItem from "../models/restaurantItem.model.js";
-import { ImageUploadFunc } from "../utils/imageUploadFunc.js";
+import { ImageUploadFunc } from "../utils/firebaseImageHandle.js";
 
 const addRestaurantItemController = async (req, res) => {
   try {
