@@ -6,10 +6,10 @@ import {
 
 const updateRestaurantController = async (req, res) => {
   try {
-    let { _id, ...updateData } = req.body;
+    let { id, ...updateData } = req.body;
 
     // Ensure the ID and data are valid
-    if (!_id || !updateData) {
+    if (!id || !updateData) {
       return res
         .status(400)
         .json({ message: "Invalid request, Missing ID or data." });
@@ -17,7 +17,7 @@ const updateRestaurantController = async (req, res) => {
 
     if (req.files && req.files["imageFileData"]) {
       let imageUrl;
-      const restaurantToBeUpdated = await Restaurant.findById(_id);
+      const restaurantToBeUpdated = await Restaurant.findById(id);
       const imageFileData = req.files["imageFileData"];
       imageUrl = await ImageUploadFunc(imageFileData, "restaurants");
       await ImageDeleteFunc(restaurantToBeUpdated.imageUrl);
@@ -27,7 +27,7 @@ const updateRestaurantController = async (req, res) => {
 
     // Find the restaurant by ID and update it with the new data
     const updatedRestaurant = await Restaurant.findByIdAndUpdate(
-      _id,
+      id,
       updateData,
       { new: true }
     );
