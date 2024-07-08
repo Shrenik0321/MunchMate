@@ -83,7 +83,7 @@ const UpdateRestaurantItem = () => {
       setLoading(true);
       const updateData = {
         imageFileData: imageUploadFormData,
-        _id: restaurantItemData._id,
+        id: restaurantItemData._id,
         ...data,
       };
       const response = await updateRestaurantItem(updateData);

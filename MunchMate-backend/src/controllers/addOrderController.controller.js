@@ -10,7 +10,7 @@ const addOrderController = async (req, res) => {
       .status(201)
       .json({ message: "Order added successfully.", data: newOrder });
   } catch (err) {
-    return res
+    return res``
       .status(500)
       .json({ message: "Internal server error.", error: err });
   }

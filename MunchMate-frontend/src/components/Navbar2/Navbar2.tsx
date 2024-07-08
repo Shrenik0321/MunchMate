@@ -9,7 +9,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { auth } = useAuthContext();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
 
   return (
     <nav className="sticky bg-white opacity-[.8] top-0 z-50 shadow-md">

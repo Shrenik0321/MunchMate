@@ -38,7 +38,7 @@ const SideBar = () => {
     <div>
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline">
+          <Button variant="outline" size="icon">
             <AlignJustify />
           </Button>
         </SheetTrigger>
