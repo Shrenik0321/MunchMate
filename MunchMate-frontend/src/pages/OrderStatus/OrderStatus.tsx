@@ -1,12 +1,17 @@
 import { Progress } from "@/components/ui/progress";
-import { useConfirmedOrder } from "@/hooks/useConfirmedOrder";
 import React from "react";
+import Cookies from "js-cookie";
 
 const OrderStatus = () => {
-  const { confirmedData } = useConfirmedOrder();
-  const [progress, setProgress] = React.useState(13);
+  const [confirmedData, setConfirmedData] = React.useState<any>(undefined);
+  const [progress, setProgress] = React.useState(3);
 
   React.useEffect(() => {
+    const cookieData = Cookies.get("confirmedOrder");
+    if (cookieData) {
+      setConfirmedData(JSON.parse(cookieData));
+    }
+
     const timer = setTimeout(() => setProgress(66), 500);
     return () => clearTimeout(timer);
   }, []);
@@ -37,17 +42,18 @@ const OrderStatus = () => {
 
           <div className="mt-4">
             <p className="text-xl font-semibold">Order:</p>
-            {confirmedData.orderedItems.map((data: any) => (
-              <div className="flex justify-between">
-                <p>{data.itemName}</p>
-                <p>{data.quantity}</p>
-              </div>
-            ))}
+            {confirmedData &&
+              confirmedData?.orderedItems.map((data: any) => (
+                <div className="flex justify-between">
+                  <p>{data.itemName}</p>
+                  <p>{data.quantity}</p>
+                </div>
+              ))}
           </div>
 
           <div className="mt-4">
             <p className="text-xl font-semibold">Total Cost:</p>
-            <p>{confirmedData.totalCost}</p>
+            <p>{confirmedData?.totalCost}</p>
           </div>
         </div>
 

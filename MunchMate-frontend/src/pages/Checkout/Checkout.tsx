@@ -4,14 +4,13 @@ import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 import OrderConfirmation from "@/components/OrderConfirmation/OrderConfirmation";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useCartContext } from "@/hooks/useCartContext";
-import { useConfirmedOrder } from "@/hooks/useConfirmedOrder";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Checkout = () => {
   const { cart } = useCartContext();
   const { auth } = useAuthContext();
-  const { setConfirmedData } = useConfirmedOrder();
   const navigate = useNavigate();
   const [totalCost, setTotalCost] = React.useState(0);
   const [confirmOrder, setConfirmOrder] = React.useState(false);
@@ -36,8 +35,9 @@ const Checkout = () => {
           totalCost: totalCost,
         };
 
-        setConfirmedData(confirmedOrderData);
-
+        Cookies.set("confirmedOrder", JSON.stringify(confirmedOrderData), {
+          expires: 1,
+        });
         const response = await createOrder(confirmedOrderData);
         if (response.data) {
           navigate("/order-status", {
