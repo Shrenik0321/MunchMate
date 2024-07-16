@@ -24,6 +24,7 @@ import Loader from "@/components/Loader/Loader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { updateOrder } from "@/api/updateOrder";
 import { handleToastError, handleToastSuccess } from "@/utils/toast";
+import { useOrderStatusContext } from "@/hooks/useOrderStatusContext";
 
 const orderFormSchema = z.object({
   customerName: z
@@ -39,8 +40,8 @@ const orderFormSchema = z.object({
     .min(2, {
       message: "Order Address must be at least 2 characters.",
     })
-    .max(50, {
-      message: "Order Address must not be longer than 50 characters.",
+    .max(200, {
+      message: "Order Address must not be longer than 200 characters.",
     }),
   contactNumber: z
     .string()
@@ -86,6 +87,7 @@ const UpdateOrder = () => {
     control: form.control,
     name: "orderedItems",
   });
+  const { setOrderStatus } = useOrderStatusContext();
 
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState(true);
@@ -124,6 +126,7 @@ const UpdateOrder = () => {
       const response = await updateOrder(updateData);
       if (response) {
         setLoading(false);
+        setOrderStatus(updateData.status);
         handleToastSuccess(response.message);
         setTimeout(() => {
           navigate("/admin/orders");

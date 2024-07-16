@@ -1,20 +1,35 @@
 import { Progress } from "@/components/ui/progress";
 import React from "react";
 import Cookies from "js-cookie";
+import { useOrderStatusContext } from "@/hooks/useOrderStatusContext";
 
 const OrderStatus = () => {
+  const { orderStatus } = useOrderStatusContext();
   const [confirmedData, setConfirmedData] = React.useState<any>(undefined);
-  const [progress, setProgress] = React.useState(3);
+  const [progress, setProgress] = React.useState(0);
 
   React.useEffect(() => {
     const cookieData = Cookies.get("confirmedOrder");
     if (cookieData) {
       setConfirmedData(JSON.parse(cookieData));
     }
-
-    const timer = setTimeout(() => setProgress(66), 500);
-    return () => clearTimeout(timer);
   }, []);
+
+  React.useEffect(() => {
+    switch (orderStatus) {
+      case "Placed":
+        setProgress(25);
+        break;
+      case "In Progress":
+        setProgress(50);
+        break;
+      case "Delivered":
+        setProgress(100);
+        break;
+      default:
+        setProgress(25);
+    }
+  }, [orderStatus]);
 
   return (
     <div className="m-10">
@@ -38,6 +53,9 @@ const OrderStatus = () => {
           <p className="text-3xl font-bold">Delivery Details</p>
           <div className="mt-4">
             <p className="text-xl font-semibold">Delivering To:</p>
+            <p>{confirmedData?.customerName}</p>
+            <p>{confirmedData?.contactNumber}</p>
+            <p>{confirmedData?.address}</p>
           </div>
 
           <div className="mt-4">

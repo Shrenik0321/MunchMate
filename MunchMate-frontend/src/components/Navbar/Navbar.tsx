@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { userSignOut } from "@/api/userSignOut";
 import { handleToastError, handleToastSuccess } from "@/utils/toast";
 import { Pencil } from "lucide-react";
@@ -18,6 +18,7 @@ import { Button } from "../ui/button";
 const Navbar = () => {
   const { auth, setAuth } = useAuthContext();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = async () => {
     try {
@@ -44,6 +45,19 @@ const Navbar = () => {
 
         {auth ? (
           <div className="hidden sm:flex items-center gap-4 font-semibold">
+            {location.pathname !== "/order-status" && (
+              <div className="flex-shrink-0">
+                <Button
+                  className="bg-orange-500 rounded-full"
+                  onClick={() => {
+                    navigate("/order-status");
+                  }}
+                >
+                  View Order
+                </Button>
+              </div>
+            )}
+
             <div>
               <p>{auth && auth.email}</p>
             </div>

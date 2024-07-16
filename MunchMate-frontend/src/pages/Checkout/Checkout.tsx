@@ -38,6 +38,7 @@ const Checkout = () => {
         Cookies.set("confirmedOrder", JSON.stringify(confirmedOrderData), {
           expires: 1,
         });
+
         const response = await createOrder(confirmedOrderData);
         if (response.data) {
           navigate("/order-status", {

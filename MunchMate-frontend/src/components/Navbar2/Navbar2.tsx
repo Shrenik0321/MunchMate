@@ -31,9 +31,22 @@ const Navbar = () => {
             <SearchBar />
           </div>
 
-          <div className="flex-shrink-0 mx-10">
+          <div className="flex-shrink-0 mx-5">
             <Cart />
           </div>
+
+          {location.pathname !== "/order-status" && (
+            <div className="flex-shrink-0 mx-5">
+              <Button
+                className="bg-orange-500 rounded-full"
+                onClick={() => {
+                  navigate("/order-status");
+                }}
+              >
+                View Order
+              </Button>
+            </div>
+          )}
         </div>
 
         {auth ? (
