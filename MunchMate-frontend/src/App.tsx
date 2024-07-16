@@ -24,6 +24,7 @@ import AddRestaurantItem from "./pages/AddRestaurantItem/AddRestaurantItem";
 import UpdateRestaurantItem from "./pages/UpdateRestaurantItem/UpdateRestaurantItem";
 import UpdateRestaurant from "./pages/UpdateRestaurant/UpdateRestaurant";
 import AllRestaurantItems from "./pages/AllRestaurantItems/AllRestaurantItems";
+import UpdateOrder from "./pages/UpdateOrder/UpdateOrder";
 
 function App() {
   return (
@@ -67,6 +68,7 @@ function App() {
                 path="/admin/restaurant-item/:id"
                 element={<UpdateRestaurantItem />}
               />
+              <Route path="/admin/order/:id" element={<UpdateOrder />} />
             </Route>
           </Route>
 

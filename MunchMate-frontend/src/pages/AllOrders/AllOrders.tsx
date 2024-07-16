@@ -1,12 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "@/components/Loader/Loader";
-import {
-  Trash,
-  MoreVertical,
-  ChevronDownIcon,
-  ChevronDown,
-} from "lucide-react";
+import { Trash, ChevronDownIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -15,9 +10,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { getAllOrders } from "@/api/getAllOrders";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 const AllOrders = () => {
-  const [currentStatus, setCurrentStatus] = React.useState("Placed");
   const [orders, setOrders] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
@@ -29,7 +24,6 @@ const AllOrders = () => {
         const response = await getAllOrders({});
         const { data } = response;
         if (data) {
-          console.log(data);
           setOrders(data);
         }
       } catch (error) {
@@ -48,8 +42,7 @@ const AllOrders = () => {
     "Price",
     "Contact Number",
     "Address",
-    "Status",
-    "Action",
+    "Actions",
   ];
 
   const handleDelete = (restaurantId: string) => {
@@ -58,9 +51,10 @@ const AllOrders = () => {
   };
 
   const statusOptions = [
-    { label: "Placed", color: "bg-blue-200" },
-    { label: "In Progress", color: "bg-yellow-200" },
+    { label: "Placed", color: "bg-yellow-200" },
+    { label: "In Progress", color: "bg-blue-200" },
     { label: "Delivered", color: "bg-green-200" },
+    { label: "Rejected", color: "bg-red-200" },
   ];
 
   const getStatusColor = (status: string) => {
@@ -95,9 +89,7 @@ const AllOrders = () => {
                     ? 3
                     : index === 5
                     ? 1
-                    : index === 6
-                    ? 1
-                    : 2
+                    : 3
                 } flex items-center`}
                 key={header}
               >
@@ -112,25 +104,38 @@ const AllOrders = () => {
             </div>
           ) : (
             <>
-              {orders.map((restaurant: any, key: number) => (
+              {orders.map((order: any, key: number) => (
                 <div
                   className="grid grid-cols-12 border-t border-stroke py-3 dark:border-strokedark sm:grid-cols-12 md:px-6 2xl:px-7.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors duration-200"
                   key={key}
                   onClick={() =>
-                    navigate(`/admin/restaurant/${restaurant._id}`, {
-                      state: { restaurant },
+                    navigate(`/admin/order/${order._id}`, {
+                      state: { order },
                     })
                   }
                 >
-                  <div className="col-span-2 flex items-center">
-                    <p className="text-sm text-black dark:text-white">
-                      {restaurant?.userId.name}
-                    </p>
+                  <div className="col-span-3 flex items-center">
+                    <div className="flex flex-col gap-2">
+                      <p className="text-sm text-black dark:text-white">
+                        {order?.userId.name}
+                      </p>
+                      <div className="col-span-2 flex items-center">
+                        <Badge
+                          variant="outline"
+                          className={`text-xs ${getStatusColor(order.status)}`}
+                        >
+                          {order.status}
+                        </Badge>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="col-span-2 flex items-center">
                     <DropdownMenu>
-                      <DropdownMenuTrigger className="cursor-pointer">
+                      <DropdownMenuTrigger
+                        className="cursor-pointer"
+                        onClick={(e) => e.stopPropagation()}
+                      >
                         <Button
                           variant="secondary"
                           className="text-xs bg-[#e5e7eb]"
@@ -140,17 +145,15 @@ const AllOrders = () => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
-                        {restaurant?.orderedItems.map(
-                          (item: any, index: number) => (
-                            <DropdownMenuItem
-                              key={index}
-                              className="flex justify-between gap-10"
-                            >
-                              <span>{item?.restaurantItemId?.name}</span>
-                              <span>x{item?.quantity}</span>
-                            </DropdownMenuItem>
-                          )
-                        )}
+                        {order?.orderedItems.map((item: any, index: number) => (
+                          <DropdownMenuItem
+                            key={index}
+                            className="flex justify-between gap-10"
+                          >
+                            <span>{item?.restaurantItemId?.name}</span>
+                            <span>x{item?.quantity}</span>
+                          </DropdownMenuItem>
+                        ))}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
@@ -161,46 +164,22 @@ const AllOrders = () => {
 
                   <div className="col-span-2 flex items-center">
                     <p className="text-sm text-black dark:text-white">
-                      {restaurant.contactNumber}
+                      {order.contactNumber}
                     </p>
                   </div>
 
                   <div className="col-span-3 flex items-center">
                     <p className="text-sm text-black dark:text-white">
-                      {restaurant.address}
+                      {order.address}
                     </p>
                   </div>
 
-                  <div className="col-span-1 flex items-center">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className="cursor-pointer">
-                        <Button
-                          variant="secondary"
-                          className={`text-xs ${getStatusColor(currentStatus)}`}
-                        >
-                          {currentStatus}
-                          <ChevronDown className="ml-2 h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        {statusOptions.map((option, index) => (
-                          <DropdownMenuItem
-                            key={index}
-                            onClick={() => setCurrentStatus(option.label)}
-                          >
-                            {option.label}
-                          </DropdownMenuItem>
-                        ))}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-
-                  <div className="col-span-1 flex items-center justify-center">
+                  <div className="col-span-1 flex items-center justify-center ">
                     <Trash
                       className="w-5 h-5 text-red-500 cursor-pointer"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleDelete(restaurant._id);
+                        handleDelete(order._id);
                       }}
                     />
                   </div>
