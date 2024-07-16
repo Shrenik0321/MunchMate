@@ -1,7 +1,9 @@
 import { Progress } from "@/components/ui/progress";
+import { useConfirmedOrder } from "@/hooks/useConfirmedOrder";
 import React from "react";
 
 const OrderStatus = () => {
+  const { confirmedData } = useConfirmedOrder();
   const [progress, setProgress] = React.useState(13);
 
   React.useEffect(() => {
@@ -31,26 +33,21 @@ const OrderStatus = () => {
           <p className="text-3xl font-bold">Delivery Details</p>
           <div className="mt-4">
             <p className="text-xl font-semibold">Delivering To:</p>
-            <p>John Doe</p>
-            <p>123 Main St, Apt 4B</p>
-            <p>Springfield, IL 62704</p>
           </div>
 
           <div className="mt-4">
             <p className="text-xl font-semibold">Order:</p>
-            <div className="flex justify-between">
-              <p>Pizza</p>
-              <p>2</p>
-            </div>
-            <div className="flex justify-between">
-              <p>Burger</p>
-              <p>1</p>
-            </div>
+            {confirmedData.orderedItems.map((data: any) => (
+              <div className="flex justify-between">
+                <p>{data.itemName}</p>
+                <p>{data.quantity}</p>
+              </div>
+            ))}
           </div>
 
           <div className="mt-4">
             <p className="text-xl font-semibold">Total Cost:</p>
-            <p>$29.99</p>
+            <p>{confirmedData.totalCost}</p>
           </div>
         </div>
 

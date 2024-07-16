@@ -6,11 +6,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const Bill = ({ cart }: any) => {
+const Bill = ({ cart, setTotalCost }: any) => {
   const deliveryCost = 3.0;
   const foodItems = [...cart];
   const totalCost =
     foodItems.reduce((total, item) => total + item.price, 0) + deliveryCost;
+  setTotalCost(totalCost);
 
   return (
     <div>

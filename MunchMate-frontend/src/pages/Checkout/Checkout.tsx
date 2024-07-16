@@ -4,32 +4,46 @@ import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 import OrderConfirmation from "@/components/OrderConfirmation/OrderConfirmation";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useCartContext } from "@/hooks/useCartContext";
+import { useConfirmedOrder } from "@/hooks/useConfirmedOrder";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const { cart } = useCartContext();
   const { auth } = useAuthContext();
+  const { setConfirmedData } = useConfirmedOrder();
   const navigate = useNavigate();
+  const [totalCost, setTotalCost] = React.useState(0);
   const [confirmOrder, setConfirmOrder] = React.useState(false);
+  const [contactNo, setContactNo] = React.useState(auth.contactNo || "");
+  const [address, setAddress] = React.useState("");
 
   React.useEffect(() => {
     async function handleConfirmOrder() {
       try {
-        const orderData = {
+        const confirmedOrderData = {
           userId: auth._id,
+          customerName: auth.name,
           restaurantId: cart[0].restaurantId,
-          contactNumber: "1223344",
-          address: "123 Main St, Springfield, IL",
+          contactNumber: contactNo,
+          address: address,
           orderedItems: cart.map((item: any) => ({
+            itemName: item.name,
             restaurantItemId: item._id,
             quantity: 1,
           })),
           status: "Placed",
+          totalCost: totalCost,
         };
 
-        const response = createOrder(orderData);
-        // navigate("/order-status");
+        setConfirmedData(confirmedOrderData);
+
+        const response = await createOrder(confirmedOrderData);
+        if (response.data) {
+          navigate("/order-status", {
+            state: { orderData: confirmedOrderData },
+          });
+        }
       } catch (err) {
         console.log(err);
       }
@@ -47,10 +61,16 @@ const Checkout = () => {
       </div>
       <div className="grid grid-cols-2 gap-8 ">
         <div>
-          <OrderConfirmation setConfirmOrder={setConfirmOrder} />
+          <OrderConfirmation
+            setConfirmOrder={setConfirmOrder}
+            contactNo={contactNo}
+            setContactNo={setContactNo}
+            address={address}
+            setAddress={setAddress}
+          />
         </div>
         <div>
-          <Bill cart={cart} />
+          <Bill cart={cart} setTotalCost={setTotalCost} />
         </div>
       </div>
     </div>
