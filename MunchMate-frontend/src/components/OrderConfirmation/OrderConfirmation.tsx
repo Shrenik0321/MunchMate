@@ -16,11 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useNavigate } from "react-router-dom";
 
-const OrderConfirmation = () => {
-  const navigate = useNavigate();
-
+const OrderConfirmation = ({ setConfirmOrder }: any) => {
   return (
     <div>
       <Card>
@@ -107,7 +104,7 @@ const OrderConfirmation = () => {
           </div>
         </CardContent>
         <CardFooter>
-          <Button className="w-full" onClick={() => navigate("/order-status")}>
+          <Button className="w-full" onClick={() => setConfirmOrder(true)}>
             Confirm Order
           </Button>
         </CardFooter>

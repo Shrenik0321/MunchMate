@@ -5,10 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useCartContext } from "@/hooks/useCartContext";
 
-const Bill = () => {
-  const { cart } = useCartContext();
+const Bill = ({ cart }: any) => {
   const deliveryCost = 3.0;
   const foodItems = [...cart];
   const totalCost =

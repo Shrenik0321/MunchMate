@@ -29,7 +29,6 @@ const RestaurantItem = () => {
         });
 
         if (response) {
-          console.log(response);
           setRestaurantWithRestaurantItems(response);
         }
       } catch (error) {
