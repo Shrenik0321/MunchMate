@@ -4,30 +4,47 @@ import Cookies from "js-cookie";
 import { useOrderStatusContext } from "@/hooks/useOrderStatusContext";
 
 const OrderStatus = () => {
-  const { orderStatus } = useOrderStatusContext();
+  const { orderStatus, setOrderStatus } = useOrderStatusContext();
   const [confirmedData, setConfirmedData] = React.useState<any>(undefined);
   const [progress, setProgress] = React.useState(0);
+  const [progressDescription, setProgressDescription] = React.useState("");
 
   React.useEffect(() => {
     const cookieData = Cookies.get("confirmedOrder");
     if (cookieData) {
       setConfirmedData(JSON.parse(cookieData));
     }
+
+    const handleStorageChange = (event: any) => {
+      if (event.key === "orderStatus") {
+        setOrderStatus(event.newValue);
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
   React.useEffect(() => {
     switch (orderStatus) {
       case "Placed":
         setProgress(25);
+        setProgressDescription("Awaiting restaurant confirmation");
         break;
       case "In Progress":
         setProgress(50);
+        setProgressDescription("Your order is being prepared");
         break;
       case "Delivered":
         setProgress(100);
+        setProgressDescription("Order delivered. Enjoy your meal!");
         break;
       default:
         setProgress(25);
+        setProgressDescription("Awaiting restaurant confirmation");
     }
   }, [orderStatus]);
 
@@ -36,7 +53,8 @@ const OrderStatus = () => {
       <div className="flex justify-between">
         <div>
           <p className="text-3xl font-bold">
-            Order Status: Awaiting Restaurant Confirmation
+            Order Status:
+            <span className="px-2 text-orange-500">{progressDescription}</span>
           </p>
         </div>
         <div>

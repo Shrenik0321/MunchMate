@@ -1,3 +1,4 @@
+import React from "react";
 import { CircleUserRound } from "lucide-react";
 import { LogOut } from "lucide-react";
 import { Gauge } from "lucide-react";
@@ -14,11 +15,20 @@ import { handleToastError, handleToastSuccess } from "@/utils/toast";
 import { Pencil } from "lucide-react";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { Button } from "../ui/button";
+import Cookies from "js-cookie";
 
 const Navbar = () => {
   const { auth, setAuth } = useAuthContext();
   const navigate = useNavigate();
   const location = useLocation();
+  const [confirmedData, setConfirmedData] = React.useState<any>(undefined);
+
+  React.useEffect(() => {
+    const cookieData = Cookies.get("confirmedOrder");
+    if (cookieData) {
+      setConfirmedData(JSON.parse(cookieData));
+    }
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -45,7 +55,7 @@ const Navbar = () => {
 
         {auth ? (
           <div className="hidden sm:flex items-center gap-4 font-semibold">
-            {location.pathname !== "/order-status" && (
+            {location.pathname !== "/order-status" && confirmedData && (
               <div className="flex-shrink-0">
                 <Button
                   className="bg-orange-500 rounded-full"

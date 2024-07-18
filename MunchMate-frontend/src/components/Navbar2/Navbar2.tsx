@@ -4,11 +4,21 @@ import { useAuthContext } from "@/hooks/useAuthContext";
 import { Button } from "../ui/button";
 import Cart from "../Cart/Cart";
 import SearchBar from "../SearchBar/SearchBar";
+import Cookies from "js-cookie";
+import React from "react";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { auth } = useAuthContext();
   const location = useLocation();
+  const [confirmedData, setConfirmedData] = React.useState<any>(undefined);
+
+  React.useEffect(() => {
+    const cookieData = Cookies.get("confirmedOrder");
+    if (cookieData) {
+      setConfirmedData(JSON.parse(cookieData));
+    }
+  }, []);
 
   return (
     <nav className="sticky bg-white opacity-[.8] top-0 z-50 shadow-md">
@@ -35,7 +45,7 @@ const Navbar = () => {
             <Cart />
           </div>
 
-          {location.pathname !== "/order-status" && (
+          {location.pathname !== "/order-status" && confirmedData && (
             <div className="flex-shrink-0 mx-5">
               <Button
                 className="bg-orange-500 rounded-full"

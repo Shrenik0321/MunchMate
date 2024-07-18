@@ -24,7 +24,6 @@ import Loader from "@/components/Loader/Loader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { updateOrder } from "@/api/updateOrder";
 import { handleToastError, handleToastSuccess } from "@/utils/toast";
-import { useOrderStatusContext } from "@/hooks/useOrderStatusContext";
 
 const orderFormSchema = z.object({
   customerName: z
@@ -87,7 +86,6 @@ const UpdateOrder = () => {
     control: form.control,
     name: "orderedItems",
   });
-  const { setOrderStatus } = useOrderStatusContext();
 
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState(true);
@@ -126,7 +124,7 @@ const UpdateOrder = () => {
       const response = await updateOrder(updateData);
       if (response) {
         setLoading(false);
-        setOrderStatus(updateData.status);
+        localStorage.setItem("orderStatus", updateData.status);
         handleToastSuccess(response.message);
         setTimeout(() => {
           navigate("/admin/orders");
@@ -134,6 +132,7 @@ const UpdateOrder = () => {
       }
     } catch (err) {
       handleToastError("Something went wrong");
+      ``;
     }
   }
 
