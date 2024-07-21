@@ -36,34 +36,39 @@ const AdminSidebar = () => {
   ];
 
   return (
-    <div className="flex flex-col h-full p-6 bg-gray-800 text-white">
+    <div className="flex flex-col h-full p-6 bg-white text-black">
       <style>{customStyles}</style>
       <h2 className="text-2xl font-bold pb-6">Manage Restaurant</h2>
-      <div className="space-y-6">
+      <div className="space-y-4">
         {menuItems.map((item) => (
           <Button
             key={item.label}
             variant="ghost"
-            className="flex items-center space-x-2 justify-start w-full text-left hover:bg-gray-200 transition-colors duration-200 rounded-lg"
+            className="flex items-center space-x-3 justify-start w-full text-left py-2 px-4 hover:bg-gray-200 transition-colors duration-200 rounded-lg"
             onClick={() => navigate(item.path)}
           >
-            <item.icon className="w-5 h-5" />
+            <item.icon className="w-5 h-5" color="#f97316" />
             <span>{item.label}</span>
           </Button>
         ))}
 
         <Accordion type="single" collapsible>
           <AccordionItem value="restaurants" className="accordion-item">
-            <AccordionTrigger className="flex items-center space-x-2 w-full text-left p-3 hover:bg-gray-200 transition-colors duration-200 rounded-lg hover:text-black no-rotate accordion-trigger">
-              <Utensils className="w-5 h-5 accordion-trigger-icon" />
-              <span>Restaurants</span>
+            <AccordionTrigger className="flex items-center justify-between w-full text-left py-2 px-4 hover:bg-gray-200 transition-colors duration-200 rounded-lg no-rotate accordion-trigger">
+              <div className="flex items-center space-x-3">
+                <Utensils
+                  className="w-5 h-5 accordion-trigger-icon"
+                  color="#f97316"
+                />
+                <span>Restaurants</span>
+              </div>
             </AccordionTrigger>
-            <AccordionContent className="pl-6">
+            <AccordionContent className="pl-6 space-y-2">
               {restaurantItems.map((item) => (
                 <Button
                   key={item.label}
                   variant="ghost"
-                  className="flex items-center space-x-2 justify-start w-full text-left hover:bg-gray-200 transition-colors duration-200 rounded-lg hover:text-black"
+                  className="flex items-center space-x-2 justify-start w-full text-left py-2 px-4 hover:bg-gray-200 transition-colors duration-200 rounded-lg"
                   onClick={() => navigate(item.path)}
                 >
                   <span>{item.label}</span>

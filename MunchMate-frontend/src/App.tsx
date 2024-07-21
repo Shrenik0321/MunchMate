@@ -46,6 +46,7 @@ function App() {
 
           {/* Private Routes */}
           <Route path="/" element={<AdminPrivateRoute />}>
+            {/* Admin Layout */}
             <Route path="/" element={<AdminLayout />}>
               <Route path="/admin/overview" element={<AdminOverview />} />
               <Route path="/admin/orders" element={<AllOrders />} />
