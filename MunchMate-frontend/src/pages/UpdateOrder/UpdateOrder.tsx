@@ -88,7 +88,7 @@ const UpdateOrder = () => {
   });
 
   const navigate = useNavigate();
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
   const location = useLocation();
   const orderData = location.state?.order;
 
@@ -123,7 +123,6 @@ const UpdateOrder = () => {
       };
       const response = await updateOrder(updateData);
       if (response) {
-        setLoading(false);
         localStorage.setItem("orderStatus", updateData.status);
         handleToastSuccess(response.message);
         setTimeout(() => {
@@ -132,7 +131,6 @@ const UpdateOrder = () => {
       }
     } catch (err) {
       handleToastError("Something went wrong");
-      ``;
     }
   }
 

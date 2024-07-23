@@ -23,6 +23,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Loader from "@/components/Loader/Loader";
+import { handleToastError, handleToastSuccess } from "@/utils/toast";
+import { useNavigate } from "react-router-dom";
 
 const restaurantFormSchema = z.object({
   name: z
@@ -87,23 +90,32 @@ const defaultValues: Partial<RestaurantFormValues> = {
 };
 
 const AddRestaurant = () => {
+  const [loading, setLoading] = React.useState(false);
   const [imageUploadFormData, setImageUploadFormData] = React.useState(null);
   const form = useForm<RestaurantFormValues>({
     resolver: zodResolver(restaurantFormSchema),
     defaultValues,
     mode: "onChange",
   });
+  const navigate = useNavigate();
 
   async function onSubmit(data: RestaurantFormValues) {
     try {
       const finalisedData = { imageFileData: imageUploadFormData, ...data };
       const response = await addRestaurant(finalisedData);
-      console.log(response);
-      // Add your form submission logic here
+      if (response) {
+        setLoading(false);
+        handleToastSuccess(response.message);
+        setTimeout(() => {
+          navigate("/admin/restaurants");
+        }, 2500);
+      }
     } catch (err) {
-      console.log(err);
+      handleToastError("Something went wrong");
     }
   }
+
+  if (loading) return <Loader />;
 
   return (
     <div>
