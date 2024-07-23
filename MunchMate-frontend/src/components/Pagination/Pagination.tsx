@@ -1,37 +1,78 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-const PaginationComponent = () => {
+const PaginationComponent = ({
+  activePage,
+  itemsPerPage,
+  totalItemCount,
+  onPageChange,
+}: any) => {
+  // Calculate total number of pages
+  const totalPages = Math.ceil(totalItemCount / itemsPerPage);
+
+  const handlePageChange = (page: number) => {
+    if (page > 0 && page <= totalPages) {
+      onPageChange(page);
+    }
+  };
+
   return (
-    <div>
+    <div className="flex justify-center mt-4">
       <Pagination>
         <PaginationContent>
+          {/* Previous Page */}
           <PaginationItem>
-            <PaginationPrevious href="#" />
+            <PaginationPrevious
+              href="#"
+              onClick={() => handlePageChange(activePage - 1)}
+            />
           </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-          </PaginationItem>
+
+          {/* Page Number Links */}
+          {activePage > 1 && (
+            <>
+              <PaginationItem>
+                <PaginationLink
+                  href="#"
+                  onClick={() => handlePageChange(activePage - 1)}
+                >
+                  {activePage - 1}
+                </PaginationLink>
+              </PaginationItem>
+            </>
+          )}
+
           <PaginationItem>
             <PaginationLink href="#" isActive>
-              2
+              {activePage}
             </PaginationLink>
           </PaginationItem>
+
+          {activePage < totalPages && (
+            <>
+              <PaginationItem>
+                <PaginationLink
+                  href="#"
+                  onClick={() => handlePageChange(activePage + 1)}
+                >
+                  {activePage + 1}
+                </PaginationLink>
+              </PaginationItem>
+            </>
+          )}
+
+          {/* Next Page */}
           <PaginationItem>
-            <PaginationLink href="#">3</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
+            <PaginationNext
+              href="#"
+              onClick={() => handlePageChange(activePage + 1)}
+            />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
