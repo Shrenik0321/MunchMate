@@ -1,17 +1,24 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { MapPin } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MenuItem from "@/components/MenuItem/MenuItem";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 import PaginationComponent from "@/components/Pagination/Pagination";
 import { getRestaurantWithAllRestaurantItems } from "@/api/getRestaurantWithAllRestaurantItems";
 import Loader from "@/components/Loader/Loader";
+import ReviewCarousel from "@/components/ReviewCarousel/ReviewCarousel";
 
 const RestaurantItem = () => {
   const [restaurantWithRestaurantItems, setRestaurantWithRestaurantItems] =
     React.useState<any>(null);
+  const [restaurantItems, setRestaurantItems] = React.useState<any>([]);
   const [loading, setLoading] = React.useState(false);
+  const [activePage, setActivePage] = React.useState(1);
+  const [totalItemCount, setTotalItemCount] = React.useState(0);
+
+  const itemsPerPage: number = 8;
+  const startIndex = (activePage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
 
   const getId = () => {
     const urlObject = new URL(window.location.href);
@@ -21,15 +28,20 @@ const RestaurantItem = () => {
   };
 
   React.useEffect(() => {
-    const getRestaurantWithRestaurantItems = async () => {
+    const getRestaurantWithRestaurantItems = async (page = 1) => {
       setLoading(true);
       try {
         const response = await getRestaurantWithAllRestaurantItems({
           id: getId(),
+          page,
         });
 
         if (response) {
           setRestaurantWithRestaurantItems(response);
+
+          const { items } = response;
+          setRestaurantItems(items.slice(startIndex, endIndex));
+          setTotalItemCount(items.length);
         }
       } catch (error) {
         console.log(error);
@@ -38,109 +50,81 @@ const RestaurantItem = () => {
       }
     };
 
-    getRestaurantWithRestaurantItems();
-  }, []);
+    getRestaurantWithRestaurantItems(activePage);
+  }, [activePage]);
+
+  const handlePageChange = (page: React.SetStateAction<number>) => {
+    setActivePage(page);
+  };
 
   return (
     <>
       {loading ? (
-        <>
-          <Loader />
-        </>
+        <Loader />
       ) : (
-        <>
-          <div className="my-6 mx-12">
-            <div className="my-5">
-              <BreadCrumbs />
+        <div className="my-6 mx-12">
+          <div className="my-5">
+            <BreadCrumbs />
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-10">
+            <div className="h-72">
+              <img
+                src={restaurantWithRestaurantItems?.imageUrl}
+                alt="RestaurantItem Image"
+                className="w-full h-full object-cover rounded-xl"
+              />
             </div>
 
-            <div className="grid grid-rows-2">
-              <div className="col-span-1 h-72">
-                <img
-                  src={restaurantWithRestaurantItems?.imageUrl}
-                  alt="RestaurantItem Image"
-                  className="w-full h-full object-cover rounded-xl"
-                />
+            <div className="flex flex-col gap-4">
+              <h1 className="text-4xl font-bold cursor-pointer">
+                {restaurantWithRestaurantItems?.name}
+              </h1>
+              <div className="flex flex-wrap gap-2">
+                {restaurantWithRestaurantItems?.tags.map(
+                  (tagItem: any, index: number) => (
+                    <Badge
+                      key={index}
+                      variant="outline"
+                      className="border-gray-500"
+                    >
+                      {tagItem}
+                    </Badge>
+                  )
+                )}
               </div>
-
-              <div className="col-span-1 mt-8">
-                <div className="flex flex-col gap-2">
-                  <div className="flex my-2 justify-between">
-                    <div>
-                      <p className="text-4xl font-bold cursor-pointer">
-                        {restaurantWithRestaurantItems?.name}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2 my-2">
-                    {restaurantWithRestaurantItems?.tags.map(
-                      (tagItem: any, index: number) => (
-                        <Badge
-                          key={index}
-                          variant="outline"
-                          className="border-gray-500"
-                        >
-                          {tagItem}
-                        </Badge>
-                      )
-                    )}
-                  </div>
-                  <div className="flex my-2">
-                    <div>
-                      <MapPin />
-                    </div>
-                    <p className="text-md">
-                      {restaurantWithRestaurantItems?.address}
-                    </p>
-                  </div>
-                  <div className="my-2">
-                    <p className="text-[#52525b]">
-                      {restaurantWithRestaurantItems?.description}
-                    </p>
-                  </div>
-                </div>
+              <div className="flex items-center gap-2">
+                <MapPin />
+                <p className="text-md">
+                  {restaurantWithRestaurantItems?.address}
+                </p>
               </div>
-            </div>
+              <p className="text-[#52525b]">
+                {restaurantWithRestaurantItems?.description}
+              </p>
 
-            <div>
-              <Tabs defaultValue="all">
-                <TabsList className="flex w-full">
-                  <TabsTrigger value="all" className="flex-grow">
-                    All
-                  </TabsTrigger>
-                  <TabsTrigger value="breakfast" className="flex-grow">
-                    Breakfast
-                  </TabsTrigger>
-                  <TabsTrigger value="lunch" className="flex-grow">
-                    Lunch
-                  </TabsTrigger>
-                  <TabsTrigger value="dinner" className="flex-grow">
-                    Dinner
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="all">
-                  <div className="grid grid-cols-4 gap-4">
-                    {restaurantWithRestaurantItems?.items?.length > 0 &&
-                      restaurantWithRestaurantItems?.items.map(
-                        (item: any, index: number) => (
-                          <div className="my-2" key={index}>
-                            <MenuItem item={item} />
-                          </div>
-                        )
-                      )}
-                  </div>
-                </TabsContent>
-                <TabsContent value="breakfast">Breakfast</TabsContent>
-                <TabsContent value="lunch">Lunch</TabsContent>
-                <TabsContent value="dinner">Dinner</TabsContent>
-              </Tabs>
-            </div>
-
-            <div className="my-5">
-              <PaginationComponent />
+              <ReviewCarousel />
             </div>
           </div>
-        </>
+
+          <div className="grid md:grid-cols-4 gap-4 my-8">
+            {restaurantItems.length > 0 &&
+              restaurantItems.map((item: any, index: number) => (
+                <div key={index}>
+                  <MenuItem item={item} />
+                </div>
+              ))}
+          </div>
+
+          <div className="my-5">
+            <PaginationComponent
+              activePage={activePage}
+              itemsPerPage={itemsPerPage}
+              totalItemCount={totalItemCount}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        </div>
       )}
     </>
   );

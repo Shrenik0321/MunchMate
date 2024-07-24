@@ -3,7 +3,7 @@ import SideBar from "../SideBar/SideBar";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { Button } from "../ui/button";
 import Cart from "../Cart/Cart";
-import SearchBar from "../SearchBar/SearchBar";
+// import SearchBar from "../SearchBar/SearchBar";
 import Cookies from "js-cookie";
 import React from "react";
 
@@ -35,10 +35,6 @@ const Navbar = () => {
             >
               MunchMate
             </p>
-          </div>
-
-          <div className="flex-grow mx-20 w-full">
-            <SearchBar />
           </div>
 
           <div className="flex-shrink-0 mx-5">

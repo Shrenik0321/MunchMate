@@ -12,7 +12,7 @@ const SearchBar = () => {
           <Input
             type="search"
             placeholder="Search by Name, City or Town"
-            className="rounded-full pl-10 border border-gray-700 w-full"
+            className="pl-10 border border-gray-700 w-full"
           />
         </div>
       </div>

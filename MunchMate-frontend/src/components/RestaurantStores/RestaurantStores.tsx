@@ -44,7 +44,7 @@ const RestaurantStores = () => {
         <Loader />
       ) : (
         <>
-          <div className="grid grid-cols-3 gap-5">
+          <div className="grid grid-cols-4 gap-5">
             {restaurants.map((item, index) => (
               <RestaurantItemCard item={item} key={index} />
             ))}
