@@ -159,7 +159,9 @@ const AllOrders = () => {
                   </div>
 
                   <div className="col-span-1 flex items-center">
-                    <p className="text-sm text-black dark:text-white">$12.43</p>
+                    <p className="text-sm text-black dark:text-white">
+                      ${order.totalCost}
+                    </p>
                   </div>
 
                   <div className="col-span-2 flex items-center">

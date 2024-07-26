@@ -8,6 +8,7 @@ import auth from "./routes/auth.route.js";
 import restaurant from "./routes/restaurant.route.js";
 import restaurantItem from "./routes/restaurantItem.route.js";
 import orderItem from "./routes/order.route.js";
+import analytics from "./routes/analytics.route.js";
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use("/api/auth", auth);
 app.use("/api/restaurants", restaurant);
 app.use("/api/restaurant-items", restaurantItem);
 app.use("/api/orders", orderItem);
+app.use("/api/analytics", analytics);
 
 app.listen(LOCALHOST_SERVER_PORT, (req, res) => {
   connectDb();

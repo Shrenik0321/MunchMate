@@ -30,7 +30,7 @@ const customStyles = `
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(true);
 
   const menuItems = [
     { label: "Overview", icon: Home, path: "/admin/overview" },
@@ -79,7 +79,7 @@ const AdminSidebar = () => {
         <div className="flex flex-col h-full bg-white text-black transition-width duration-200 w-64">
           <div className="flex justify-between mx-2 my-4">
             <div>
-              <h2 className="text-xl font-bold">Manage Restaurant</h2>
+              <h2 className="text-xl font-bold">MunchMate.</h2>
             </div>
 
             <Button

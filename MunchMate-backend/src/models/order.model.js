@@ -33,6 +33,10 @@ const orderSchema = mongoose.Schema(
     orderedItems: {
       type: [orderedItemsSchema],
     },
+    totalCost: {
+      type: Number,
+      required: [true, "Total Cost is required."],
+    },
     contactNumber: {
       type: String,
       required: [true, "Contact Number is required."],

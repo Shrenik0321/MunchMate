@@ -1,4 +1,6 @@
+import { getAnalyticsOverview } from "@/api/getAnalyticsOverview";
 import Analytics from "@/components/Analytics/Analytics";
+import Loader from "@/components/Loader/Loader";
 import { RecentSales } from "@/components/RecentSales/RecentSales";
 import {
   Card,
@@ -7,8 +9,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import React from "react";
 
 const AdminOverview = () => {
+  const [loading, setLoading] = React.useState(false);
+  const [analyticsOverview, setAnalyticsOverview] =
+    React.useState<any>(undefined);
+
+  React.useEffect(() => {
+    const getAnalytics = async () => {
+      setLoading(true);
+      try {
+        const response = await getAnalyticsOverview();
+        setAnalyticsOverview(response);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getAnalytics();
+  }, []);
+
+  if (loading) return <Loader />;
+
   return (
     <div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-5">
@@ -31,7 +56,9 @@ const AdminOverview = () => {
             </svg>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-500">$45,231.89</div>
+            <div className="text-2xl font-bold text-orange-500">
+              {`$${analyticsOverview && analyticsOverview?.totalRevenue}`}
+            </div>
             <p className="text-xs text-zinc-600">+20.1% from last month</p>
           </CardContent>
         </Card>
@@ -56,7 +83,9 @@ const AdminOverview = () => {
             </svg>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-500">+2350</div>
+            <div className="text-2xl font-bold text-orange-500">
+              {`+${analyticsOverview && analyticsOverview?.subscriptions}`}
+            </div>
             <p className="text-xs">+180.1% from last month</p>
           </CardContent>
         </Card>
@@ -80,7 +109,9 @@ const AdminOverview = () => {
             </svg>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-500">+12,234</div>
+            <div className="text-2xl font-bold text-orange-500">
+              {`+${analyticsOverview && analyticsOverview?.sales}`}
+            </div>
             <p className="text-xs text-zinc-600">+19% from last month</p>
           </CardContent>
         </Card>

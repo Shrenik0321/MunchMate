@@ -21,7 +21,7 @@ const Banner = () => {
             Burger Haven West Colombo
           </p>
 
-          <div className="flex gap-2 my-4">
+          <div className="flex gap-2 my-6">
             <div>
               <Button className="bg-[#03081F] text-white rounded-full">
                 <div className="flex items-center justify-center gap-2">
