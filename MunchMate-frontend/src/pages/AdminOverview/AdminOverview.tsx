@@ -153,7 +153,9 @@ const AdminOverview = () => {
           <CardHeader>
             <CardTitle className="text-zinc-600">Recent Sales</CardTitle>
             <CardDescription className="text-orange-500">
-              You made 265 sales this month.
+              {`You made ${
+                analyticsOverview && analyticsOverview?.sales
+              } sales this month.`}
             </CardDescription>
           </CardHeader>
           <CardContent>
