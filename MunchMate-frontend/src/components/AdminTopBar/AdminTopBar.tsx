@@ -72,7 +72,7 @@ const AdminTopBar = () => {
                     <span>Home</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => navigate("/admin/overview")}>
+                  <DropdownMenuItem onClick={() => navigate("/edit-profile")}>
                     <Pencil className="mr-2 h-4 w-4" />
                     <span>Edit Profile</span>
                   </DropdownMenuItem>

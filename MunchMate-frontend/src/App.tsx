@@ -25,6 +25,7 @@ import UpdateRestaurantItem from "./pages/UpdateRestaurantItem/UpdateRestaurantI
 import UpdateRestaurant from "./pages/UpdateRestaurant/UpdateRestaurant";
 import AllRestaurantItems from "./pages/AllRestaurantItems/AllRestaurantItems";
 import UpdateOrder from "./pages/UpdateOrder/UpdateOrder";
+import EditProfile from "./pages/EditProfile/EditProfile";
 
 function App() {
   return (
@@ -41,7 +42,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/order-status" element={<OrderStatus />} />
-            <Route />
+            <Route path="/edit-profile" element={<EditProfile />} />
           </Route>
 
           {/* Private Routes */}

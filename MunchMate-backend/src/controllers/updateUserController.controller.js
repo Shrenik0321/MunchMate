@@ -1,6 +1,6 @@
-import Order from "../models/order.model.js";
+import User from "../models/user.model.js";
 
-const updateOrderController = async (req, res) => {
+export const updateUserController = async (req, res) => {
   try {
     let { id, ...updateData } = req.body;
 
@@ -12,18 +12,18 @@ const updateOrderController = async (req, res) => {
     }
 
     // Find the restaurant by ID and update it with the new data
-    const updatedOrder = await Order.findByIdAndUpdate(id, updateData, {
+    const updatedRestaurant = await User.findByIdAndUpdate(id, updateData, {
       new: true,
     });
 
-    if (!updatedOrder) {
-      return res.status(404).json({ message: "Order not found." });
+    if (!updatedRestaurant) {
+      return res.status(404).json({ message: "User not found." });
     }
 
     // Send the updated restaurant data as the response
     return res.status(200).json({
-      message: "Order updated successfully.",
-      data: updatedOrder,
+      message: "User updated successfully.",
+      data: updatedRestaurant,
     });
   } catch (err) {
     return res
@@ -31,5 +31,3 @@ const updateOrderController = async (req, res) => {
       .json({ message: "Internal server error.", error: err });
   }
 };
-
-export default updateOrderController;

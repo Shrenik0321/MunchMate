@@ -36,27 +36,26 @@ const Navbar = () => {
               MunchMate
             </p>
           </div>
-
-          <div className="flex-shrink-0 mx-5">
-            <Cart />
-          </div>
-
-          {location.pathname !== "/order-status" && confirmedData && (
-            <div className="flex-shrink-0 mx-5">
-              <Button
-                className="bg-orange-500 rounded-full"
-                onClick={() => {
-                  navigate("/order-status");
-                }}
-              >
-                View Order
-              </Button>
-            </div>
-          )}
         </div>
 
         {auth ? (
           <div className="hidden sm:flex items-center gap-2 font-semibold">
+            <div className="flex-shrink-0 mx-5">
+              <Cart />
+            </div>
+
+            {location.pathname !== "/order-status" && confirmedData && (
+              <div className="flex-shrink-0 mx-5">
+                <Button
+                  className="bg-orange-500 rounded-full"
+                  onClick={() => {
+                    navigate("/order-status");
+                  }}
+                >
+                  View Order
+                </Button>
+              </div>
+            )}
             <p className="whitespace-nowrap">Welcome, {auth.name}</p>
           </div>
         ) : (

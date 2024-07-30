@@ -127,7 +127,7 @@ const SideBar = () => {
             </AccordionItem>
           </Accordion>
 
-          <div>
+          <div className="my-2">
             <p
               className="text-sm text-gray-500 cursor-pointer"
               onClick={() => navigate("/admin/overview")}
@@ -136,8 +136,17 @@ const SideBar = () => {
             </p>
           </div>
 
+          <div className="my-2">
+            <p
+              className="text-sm text-gray-500 cursor-pointer"
+              onClick={() => navigate("/admin/overview")}
+            >
+              View all past orders.
+            </p>
+          </div>
+
           {auth && (
-            <div className="mt-auto flex flex-col items-start space-y-2">
+            <div className="my-2 flex flex-col items-start space-y-2">
               <div className="flex items-center space-x-2">
                 <LogOut
                   className="cursor-pointer text-gray-500 hover:text-gray-700"
