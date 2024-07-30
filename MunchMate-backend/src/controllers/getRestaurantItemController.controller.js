@@ -12,7 +12,7 @@ const getRestaurantItemController = async (req, res) => {
         query._id = id;
       }
       if (name) {
-        query.name = name;
+        query.name = { $regex: new RegExp(name, "i") };
       }
       if (restaurantId) {
         const objectId =

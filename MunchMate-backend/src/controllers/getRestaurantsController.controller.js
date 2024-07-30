@@ -7,7 +7,7 @@ const getRestaurantsController = async (req, res) => {
     if (id || name) {
       const query = {};
       if (id) query._id = id;
-      if (name) query.name = name;
+      if (name) query.name = { $regex: new RegExp(name, "i") };
 
       const restaurant = await Restaurants.findOne(query);
       if (!restaurant) {

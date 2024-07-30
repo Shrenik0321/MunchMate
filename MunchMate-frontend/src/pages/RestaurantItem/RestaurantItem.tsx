@@ -7,6 +7,7 @@ import PaginationComponent from "@/components/Pagination/Pagination";
 import { getRestaurantWithAllRestaurantItems } from "@/api/getRestaurantWithAllRestaurantItems";
 import Loader from "@/components/Loader/Loader";
 import ReviewCarousel from "@/components/ReviewCarousel/ReviewCarousel";
+import SearchBar from "@/components/SearchBar/SearchBar";
 
 const RestaurantItem = () => {
   const [restaurantWithRestaurantItems, setRestaurantWithRestaurantItems] =
@@ -15,7 +16,7 @@ const RestaurantItem = () => {
   const [loading, setLoading] = React.useState(false);
   const [activePage, setActivePage] = React.useState(1);
   const [totalItemCount, setTotalItemCount] = React.useState(0);
-
+  const [itemSearch, setItemSearch] = React.useState("");
   const itemsPerPage: number = 8;
   const startIndex = (activePage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -27,42 +28,69 @@ const RestaurantItem = () => {
     return id;
   };
 
-  React.useEffect(() => {
-    const getRestaurantWithRestaurantItems = async (page = 1) => {
-      setLoading(true);
-      try {
-        const response = await getRestaurantWithAllRestaurantItems({
-          id: getId(),
-          page,
-        });
+  const getRestaurantWithRestaurantItems = async (page = 1) => {
+    setLoading(true);
+    try {
+      const response = await getRestaurantWithAllRestaurantItems({
+        id: getId(),
+        page,
+      });
 
-        if (response) {
-          setRestaurantWithRestaurantItems(response);
+      if (response) {
+        setRestaurantWithRestaurantItems(response);
 
-          const { items } = response;
-          setRestaurantItems(items.slice(startIndex, endIndex));
-          setTotalItemCount(items.length);
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
+        const { items } = response;
+        setRestaurantItems(items.slice(startIndex, endIndex));
+        setTotalItemCount(items.length);
       }
-    };
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  React.useEffect(() => {
     getRestaurantWithRestaurantItems(activePage);
   }, [activePage]);
+
+  // React.useEffect(() => {
+  //   const getRestaurantItemsBySearch = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const response = await getRestaurantWithAllRestaurantItems({
+  //         id: getId(),
+  //         name: itemSearch,
+  //       });
+  //       const { items } = response;
+  //       if (items) {
+  //         setRestaurantItems(items);
+  //         setTotalItemCount(items.length);
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   if (itemSearch != "") {
+  //     getRestaurantItemsBySearch();
+  //   } else {
+  //     getRestaurantWithRestaurantItems();
+  //   }
+  // }, [itemSearch]);
 
   const handlePageChange = (page: React.SetStateAction<number>) => {
     setActivePage(page);
   };
 
   return (
-    <>
+    <div className="my-6 mx-12">
       {loading ? (
         <Loader />
       ) : (
-        <div className="my-6 mx-12">
+        <div>
           <div className="my-5">
             <BreadCrumbs />
           </div>
@@ -106,7 +134,25 @@ const RestaurantItem = () => {
               <ReviewCarousel />
             </div>
           </div>
+        </div>
+      )}
 
+      <div className="mt-8 mb-1 flex justify-between text-center items-center">
+        <div>
+          <p className="text-2xl font-bold text-[#03081F] font-sans">
+            All Restaurant Items.
+          </p>
+        </div>
+
+        <div className="mr-2">
+          <SearchBar setItemSearch={setItemSearch} />
+        </div>
+      </div>
+
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
           <div className="grid md:grid-cols-4 gap-4 my-8">
             {restaurantItems.length > 0 &&
               restaurantItems.map((item: any, index: number) => (
@@ -124,9 +170,9 @@ const RestaurantItem = () => {
               onPageChange={handlePageChange}
             />
           </div>
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 };
 
