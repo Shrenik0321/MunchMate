@@ -5,6 +5,7 @@ import { ACCESS_TOKEN } from "../configs/envConfig.js";
 // Function to verify authentication and respond with user data
 export const authVerifyController = async (req, res) => {
   const token = req.cookies.accessToken;
+
   if (!token) {
     return res
       .status(401)

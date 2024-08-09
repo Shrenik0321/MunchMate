@@ -1,3 +1,4 @@
+import { NODE_ENV } from "../configs/envConfig.js";
 import User from "../models/user.model.js";
 import generateToken from "../utils/generateToken.util.js";
 import bcrypt from "bcrypt";
@@ -25,12 +26,12 @@ export const userSignUpController = async (req, res) => {
 
     // Generate jwt access token
     const token = generateToken(user._id);
-    // res.cookie("accessToken", token, {
-    //   httpOnly: true, // Enhances security by preventing client-side scripts from accessing the cookie
-    //   secure: NODE_ENV, // Ensures the cookie is only transmitted over secure HTTPS connections
-    //   sameSite: "strict", // Prevent CSRF attacks
-    //   maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    // });
+    res.cookie("accessToken", token, {
+      httpOnly: true, // Enhances security by preventing client-side scripts from accessing the cookie
+      secure: NODE_ENV, // Ensures the cookie is only transmitted over secure HTTPS connections
+      sameSite: "strict", // Prevent CSRF attacks
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days`
+    });
 
     return res.status(201).json({ message: "User sign up successful.", user });
   } catch (err) {
