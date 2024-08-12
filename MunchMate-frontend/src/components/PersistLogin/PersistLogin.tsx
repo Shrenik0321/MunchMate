@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation, Outlet, useNavigate } from "react-router-dom"; // baseAxios should be imported from your utils
 import { userVerify } from "@/api/userVerify";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import Loader from "../Loader/Loader";
 
 const PersistLogin = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const PersistLogin = () => {
     verifyCookie();
   }, [navigate, location]);
 
-  return loading ? <div>Loading...</div> : <Outlet />;
+  return loading ? <Loader /> : <Outlet />;
 };
 
 export default PersistLogin;
